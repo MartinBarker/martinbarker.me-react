@@ -16,14 +16,25 @@ import {
 
 function App() {
   return (
+
+
     <Router>
       <AuthProvider>
 
         <Routes>
 
-          <Route exact path="/" element={<Dashboard/>}/> 
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
 
-          {/* <PrivateRoute exact path="/" component={Dashboard} /> */}
+          {/* <Route exact path="/" element={<Dashboard/>}/> */}
+
+          {/* <PrivateRoute exact path="/" element={Dashboard} />  */}
 
 
           <Route exact path="/signup" element={<Signup/>}/> 
