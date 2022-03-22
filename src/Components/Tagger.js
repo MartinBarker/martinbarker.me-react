@@ -1,194 +1,234 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import * as mmb from 'music-metadata-browser';
+import './Styling.css';
+
+function openNav() {
+    document.getElementById("mySidebar").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidebar").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+}
 
 class App extends Component {
 
-  // metadata and file data
+    // metadata and file data
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      parseResults: [],
-      parseResultsMultiple: []
-    };
-  }
-
-  render() {
-
-    console.log('render called');
-
-    const htmlParseResults = [];
-
-    console.log('parseResultsMultiple=', this.state.parseResultsMultiple)
-
-    for (const parseResult of this.state.parseResults) {
-
-      console.log(`metadata ${parseResult.file.name}`, parseResult);
-
-      const htmlMetadata = parseResult.metadata ? (
-        <table>
-          <tbody>
-          <tr>
-            <th>Container</th>
-            <td>{parseResult.metadata.format.container}</td>
-          </tr>
-          <tr>
-            <th>Codec</th>
-            <td>{parseResult.metadata.format.codec}</td>
-          </tr>
-          <tr>
-            <th>Bit-rate</th>
-            <td>{parseResult.metadata.format.bitrate}</td>
-          </tr>
-          <tr>
-            <th>Filename</th>
-            <td>{parseResult.metadata.common.title}</td>
-          </tr>
-          </tbody>
-        </table>
-      ) : ( parseResult.error ? (<p className="App-error">{parseResult.error}</p>) : (<p>Parsing...</p>));
-
-      htmlParseResults.push(
-        <div key={parseResult.file.name}>
-          <h3>{parseResult.file.name}</h3>
-          {htmlMetadata}
-        </div>
-      );
+    constructor(props) {
+        super(props);
+        this.state = {
+            parseResults: [],
+            parseResultsMultiple: []
+        };
     }
 
-    if (this.state.parseResults.length === 0) {
-      htmlParseResults.push(<div key="message">Please choose an audio file</div>);
-    }
+    render() {
 
-    return (
-      <div className="App">
+        console.log('render called');
 
+        const htmlParseResults = [];
 
-        <hr></hr>
-        multiple files:
-        <input type="file" multiple="multiple" onChange={this.onChangeMultipleHandler}></input>
-        <hr></hr>
+        console.log('parseResultsMultiple=', this.state.parseResultsMultiple)
 
-        <input type="file" name="file" onChange={this.onChangeHandler}/>
+        for (const parseResult of this.state.parseResults) {
 
-        {htmlParseResults}
+            console.log(`metadata ${parseResult.file.name}`, parseResult);
 
-      </div>
-    );
-  }
+            const htmlMetadata = parseResult.metadata ? (
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Container</th>
+                            <td>{parseResult.metadata.format.container}</td>
+                        </tr>
+                        <tr>
+                            <th>Codec</th>
+                            <td>{parseResult.metadata.format.codec}</td>
+                        </tr>
+                        <tr>
+                            <th>Bit-rate</th>
+                            <td>{parseResult.metadata.format.bitrate}</td>
+                        </tr>
+                        <tr>
+                            <th>Filename</th>
+                            <td>{parseResult.metadata.common.title}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            ) : (parseResult.error ? (<p className="App-error">{parseResult.error}</p>) : (<p>Parsing...</p>));
 
-  //when multiple files are selected
-  onChangeMultipleHandler = async (event) => {
-    this.setState({
-      parseResultsMultiple: []
-    });
-
-
-    let startSeconds = 0
-    let endSeconds = 0
-    let startTime = '';
-    let endTime = '';
-
-    var timestampedTracklist = ``;
-
-    for (const file of event.target.files) {
-      
-      const parseResult = {
-        file: file
-      };
-
-      this.setState(state => {
-        state.parseResultsMultiple.push(parseResult);
-        return state;
-      });
-
-      //get metadata
-      try {
-        const metadata = await this.parseFile(file);
-
-        //get duration (seconds)
-        var durationSeconds = metadata.format.duration;
-        console.log('duration seconds =',durationSeconds)
-        //convert duration to hh:mm:ss
-        var duration = new Date(durationSeconds * 1000).toISOString().substr(11, 8)
-        console.log('duration =',duration)
-        
-        //set startSeconds
-        if(endSeconds === 0){
-          startSeconds = 0;
-        }else{
-          startSeconds = endSeconds;
+            htmlParseResults.push(
+                <div key={parseResult.file.name}>
+                    <h3>{parseResult.file.name}</h3>
+                    {htmlMetadata}
+                </div>
+            );
         }
-        //set endSeconds
-        endSeconds = startSeconds + durationSeconds
-        //convert to readable times
-        startTime =  new Date(startSeconds * 1000).toISOString().substr(11, 8)
-        endTime =  new Date(endSeconds * 1000).toISOString().substr(11, 8)
 
-        //get track title
-        let trackTitle = metadata.common.title;
+        if (this.state.parseResults.length === 0) {
+            htmlParseResults.push(<div key="message">Please choose an audio file</div>);
+        }
 
-        timestampedTracklist = `${timestampedTracklist}\n${startTime} - ${endTime} ${trackTitle}`
-        //console.log(`${startTime} - ${endTime} ${trackTitle}`)
+        return (
+            <div className="App">
 
-        // Update GUI
-        this.setState(state => {
-          state.parseResultsMultiple[state.parseResultsMultiple.length - 1].metadata = metadata;
-          return state;
-        });
-      }catch(err){
+                <div id="mySidebar" className="sidebar">
+                    <a className="closebtn" onClick={closeNav}>×</a>
+                    <a href="">About</a>
+                    <a href="">Services</a>
+                    <a href="">Clients</a>
+                    <a href="">Contact</a>
+                </div>
 
-      }
+                <div id="main">
+                    <button className="openbtn" onClick={openNav}>☰ Open Sidebar</button>
+                    <h2>Collapsed Sidebar</h2>
+                    <p>Click on the hamburger menu/bar icon to open the sidebar, and push this content to the right.</p>
+                
+                    <hr></hr>
+                    multiple files:
+                    <input type="file" multiple="multiple" onChange={this.onChangeMultipleHandler}></input>
+                    <hr></hr>
 
+                    <input type="file" name="file" onChange={this.onChangeHandler} />
+
+                    {htmlParseResults}
+
+                
+                </div>
+
+
+
+            </div>
+        );
     }
 
-    console.log(timestampedTracklist)
-  }
-
-  //when file upload handler is changed
-  onChangeHandler = async (event) => {
-
-    this.setState({
-      parseResults: []
-    });
-
-    for (const file of event.target.files) {
-
-      const parseResult = {
-        file: file
-      };
-
-      this.setState(state => {
-        state.parseResults.push(parseResult);
-        return state;
-      });
-
-      try {
-        const metadata = await this.parseFile(file);
-        // Update GUI
-        this.setState(state => {
-          state.parseResults[state.parseResults.length - 1].metadata = metadata;
-          return state;
+    //when multiple files are selected
+    onChangeMultipleHandler = async (event) => {
+        console.log('onChangeMultipleHandler()')
+        this.setState({
+            parseResultsMultiple: []
         });
 
-      } catch(err) {
-        this.setState(state => {
-          state.parseResults[state.parseResults.length - 1].error = err.message;
-          return state;
-        });
-      }
+
+        let startSeconds = 0
+        let endSeconds = 0
+        let startTime = '';
+        let endTime = '';
+
+        var timestampedTracklist = ``;
+        
+        console.log('onChangeMultipleHandler() event.target.files=',event.target.files)
+        for (const file of event.target.files) {
+
+            const parseResult = {
+                file: file
+            };
+
+            this.setState(state => {
+                state.parseResultsMultiple.push(parseResult);
+                return state;
+            });
+
+            //get metadata
+            try {
+                const metadata = await this.parseFile(file);
+
+                //get duration (seconds)
+                var durationSeconds = metadata.format.duration;
+                console.log('duration seconds =', durationSeconds)
+                //convert duration to hh:mm:ss
+                var duration = new Date(durationSeconds * 1000).toISOString().substr(11, 8)
+                console.log('duration =', duration)
+
+                //set startSeconds
+                if (endSeconds === 0) {
+                    startSeconds = 0;
+                } else {
+                    startSeconds = endSeconds;
+                }
+                //set endSeconds
+                endSeconds = startSeconds + durationSeconds
+                //convert to readable times
+                startTime = new Date(startSeconds * 1000).toISOString().substr(11, 8)
+                endTime = new Date(endSeconds * 1000).toISOString().substr(11, 8)
+
+                //get track title
+                let trackTitle = metadata.common.title;
+
+                timestampedTracklist = `${timestampedTracklist}\n${startTime} - ${endTime} ${trackTitle}`
+                //console.log(`${startTime} - ${endTime} ${trackTitle}`)
+
+                // Update GUI
+                this.setState(state => {
+                    state.parseResultsMultiple[state.parseResultsMultiple.length - 1].metadata = metadata;
+                    return state;
+                });
+            } catch (err) {
+
+            }
+
+        }
+
+        console.log(timestampedTracklist)
     }
-  };
 
-  //get metadata for audio file
-  async parseFile(file) {
-    console.log(`Parsing file "${file.name}" of type ${file.type}`);
+    //when file upload handler is changed
+    onChangeHandler = async (event) => {
 
-    return mmb.parseBlob(file, {native: true}).then(metadata => {
-      console.log(`Completed parsing of ${file.name}:`, metadata);
-      return metadata;
-    })
-  }
+        this.setState({
+            parseResults: []
+        });
+
+        for (const file of event.target.files) {
+
+            const parseResult = {
+                file: file
+            };
+
+            this.setState(state => {
+                state.parseResults.push(parseResult);
+                return state;
+            });
+
+            try {
+                const metadata = await this.parseFile(file);
+                // Update GUI
+                this.setState(state => {
+                    state.parseResults[state.parseResults.length - 1].metadata = metadata;
+                    return state;
+                });
+
+            } catch (err) {
+                this.setState(state => {
+                    state.parseResults[state.parseResults.length - 1].error = err.message;
+                    return state;
+                });
+            }
+        }
+    };
+
+    //get metadata for audio file
+    async parseFile(file) {
+        console.log(`Parsing file "${file.name}" of type ${file.type}`);
+
+        return mmb.parseBlob(file, { native: true })
+        .then(metadata => {
+            console.log(`Completed parsing of ${file.name}:`, metadata);
+            return metadata;
+        }).catch((error) => {
+            console.log('parseFile error: ', error)
+        }).finally(()=>{
+            console.log('finally')
+        })
+
+        
+    }
+
+
+
 
 }
 
