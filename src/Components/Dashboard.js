@@ -22,7 +22,7 @@ export default function Dashboard() {
             <h2>Dashboard</h2>
             <div><Link to="/signup">Sign Up</Link></div>
             <div><Link to="/login">Log in</Link></div>
-            <div><Link to="/update-profile">Log in</Link></div>
+            <div><Link to="/update-profile">Update Profile</Link></div>
 
             <h2>Profile</h2>
             <div><strong>Email: </strong>{currentUser.email}</div>

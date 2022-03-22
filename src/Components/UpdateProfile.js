@@ -2,32 +2,39 @@ import React, { useRef, useState } from 'react'
 import { useAuth } from '../Contexts/AuthContext'
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Signup() {
+export default function UpdateProfile() {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
-    const { signup, currentUser } = useAuth()
+    const { currentUser, updatePassword, updateEmail } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate();
 
-    async function handleSubmit(e){
+    function handleSubmit(e){
         e.preventDefault()
-
         //check if passwords dont match
         if(passwordRef.current.value !== passwordConfirmRef.current.value){
             return setError("Passwords do not match")
         }
 
-        try{
-            setError("")
-            setLoading(true)
-            await signup(emailRef.current.value, passwordRef.current.value)
-            //navigate.push("/")
-        }catch(err){
-            setError(`Failed to create account: ${err}`)
+        const promises = []
+        setError("")
+        setLoading(true)
+        if (emailRef.current.value !== currentUser.email){
+            promises.push(updateEmail(emailRef.current.value))
         }
-        setLoading(false)
+        if (passwordRef.current.value){
+            promises.push(updatePassword(passwordRef.current.value))
+        }
+        Promise.all(promises).then(()=>{
+            navigate("/");
+        }).catch(()=>{
+            setError('Failed to update account')
+        }).finally(()=>{
+            setLoading(false)
+        })
+
     }
 
     return (
@@ -38,20 +45,20 @@ export default function Signup() {
             <form onSubmit={handleSubmit}>
                 <label >Email:</label>
                 <br></br>
-                <input type="text" ref={emailRef}></input>
+                <input type="text" ref={emailRef} defaultValue={currentUser.email}></input>
                 <br></br>
                 <label >Password:</label>
                 <br></br>
-                <input type="text" ref={passwordRef}></input>
+                <input type="text" ref={passwordRef} placeholder="Leave blank to keep the same"></input>
                 <br></br>
                 <label >Password Confirmation:</label>
                 <br></br>
-                <input type="text" ref={passwordConfirmRef}></input>
+                <input type="text" ref={passwordConfirmRef} placeholder="Leave blank to keep the same"></input>
                 <br></br>
-                <input disabled={loading} type="submit" value="Submit"></input>
+                <input disabled={loading} type="submit" value="Update"></input>
             </form>
 
-            <div>Already have an account? <Link to="/login">Login</Link></div>
+            <div><Link to="/">Cancel</Link></div>
         </>
 
     )
