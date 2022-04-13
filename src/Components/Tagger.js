@@ -12,68 +12,113 @@ function closeNav() {
     document.getElementById("main").style.marginLeft = "0";
 }
 
+function formatTime(timeSeconds){
+    let timeStr = ""
+    let hh = new Date(timeSeconds * 1000).toISOString().substr(11, 2)
+    //if hh are zero
+    if(hh === "00"){
+        //dont include hh
+        timeStr = new Date(timeSeconds * 1000).toISOString().substr(14, 5)
+    }else{
+        //include hh
+        timeStr = new Date(timeSeconds * 1000).toISOString().substr(11, 8)
+    }
+    return timeStr
+}   
+
+function formatTimestampTxt(files, settings) {
+    console.log('formatTimestampTxt() files.length=', files.length, ', files=', files)
+    let txt = ``
+    //determine if timestamps go longer then an hour, if so append two blank chars "  " to displayStartTime
+    let hourPadding = ""
+
+    //console.log('files[files.length-1] = ',  ) //['endSeconds']
+    //if(files[files.length-1].endSeconds >= 3600 ){
+    //    hourPadding="  "
+    //}
+    for (const file of files) {
+        var txtLine = ""
+        //calculate hh:mm:ss startTime
+        if(file.startSeconds < 3600){
+            console.log('file.startSeconds < 3600')
+            //hourPadding="   "
+        }else{
+            console.log('file.startSeconds >= 3600')
+            //hourPadding=""
+        }
+        var displayStartTime = `${formatTime(file.startSeconds)}${hourPadding}`//new Date(file.startSeconds * 1000).toISOString().substr(11, 8)
+        //calcualte hh:mm:ss endTime if we need to 
+        var displayEndTime = ""
+        if (settings.includeEndTime) {
+            displayEndTime = formatTime(file.endSeconds)
+            displayEndTime=` - ${displayEndTime}`
+        }
+        //use metadata title by default, display filename is specified
+        var displaySongName = file.trackTitle
+        if (settings.displayFilename) {
+            displaySongName = file.filename
+        }
+        //format new txt line
+        txtLine = `${displayStartTime}${displayEndTime} ${displaySongName}`
+        console.log('txtLine=', txtLine)
+        //add new txt line to display result txt
+        txt = `${txt}${txtLine}\n`
+
+    }
+
+    return txt
+}
+
 class App extends Component {
 
-    // metadata and file data
-
+    //create default states
     constructor(props) {
         super(props);
         this.state = {
+            timestampsData: [],
             parseResults: [],
-            parseResultsMultiple: []
+            parseResultsMultiple: [],
+
+            //new vars
+            settings: {
+                includeEndTime: true,
+                displayFilename: false
+            },
+            files: [
+                {
+                    filename:'ex1filename',
+                    trackTitle:'ex1title',
+                    startSeconds:0,
+                    endSeconds:360.22857142857
+                },
+                {
+                    filename:'ex2filename',
+                    trackTitle:'ex2title',
+                    startSeconds:360.22857142857,
+                    endSeconds:441.6
+                },
+                {
+                    filename:'ex3filename',
+                    trackTitle:'ex3title',
+                    startSeconds:441.6,
+                    endSeconds:745.9787755102041
+                },
+            ]
         };
     }
 
+    //render page content
     render() {
-
-        console.log('render called');
-
         const htmlParseResults = [];
 
-        console.log('parseResultsMultiple=', this.state.parseResultsMultiple)
-
-        for (const parseResult of this.state.parseResults) {
-
-            console.log(`metadata ${parseResult.file.name}`, parseResult);
-
-            const htmlMetadata = parseResult.metadata ? (
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>Container</th>
-                            <td>{parseResult.metadata.format.container}</td>
-                        </tr>
-                        <tr>
-                            <th>Codec</th>
-                            <td>{parseResult.metadata.format.codec}</td>
-                        </tr>
-                        <tr>
-                            <th>Bit-rate</th>
-                            <td>{parseResult.metadata.format.bitrate}</td>
-                        </tr>
-                        <tr>
-                            <th>Filename</th>
-                            <td>{parseResult.metadata.common.title}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            ) : (parseResult.error ? (<p className="App-error">{parseResult.error}</p>) : (<p>Parsing...</p>));
-
-            htmlParseResults.push(
-                <div key={parseResult.file.name}>
-                    <h3>{parseResult.file.name}</h3>
-                    {htmlMetadata}
-                </div>
-            );
-        }
-
-        if (this.state.parseResults.length === 0) {
-            htmlParseResults.push(<div key="message">Please choose an audio file</div>);
-        }
+        //format files[] using settings{} for timestampTxt
+        var timestampTxt = formatTimestampTxt(this.state.files, this.state.settings)
+        console.log('render() timestampTxt=',timestampTxt)
 
         return (
             <div className="App">
 
+                {/* sidebar */}
                 <div id="mySidebar" className="sidebar">
                     <a className="closebtn" onClick={closeNav}>×</a>
                     <a href="">About</a>
@@ -82,21 +127,36 @@ class App extends Component {
                     <a href="">Contact</a>
                 </div>
 
+                {/* main content */}
                 <div id="main">
                     <button className="openbtn" onClick={openNav}>☰ Open Sidebar</button>
-                    <h2>Collapsed Sidebar</h2>
-                    <p>Click on the hamburger menu/bar icon to open the sidebar, and push this content to the right.</p>
-                
+
                     <hr></hr>
                     multiple files:
-                    <input type="file" multiple="multiple" onChange={this.onChangeMultipleHandler}></input>
+                    <input type="file" multiple="multiple" onChange={this.onChangeFilesSelected}></input>
                     <hr></hr>
 
                     <input type="file" name="file" onChange={this.onChangeHandler} />
 
                     {htmlParseResults}
 
-                
+
+                    <br></br>
+                    <hr></hr>
+
+                    {/* timestamped tracklist output */}
+                    <textarea id='textarea' rows="7" cols="44" onChange={this.onChangeTextArea} value={timestampTxt}></textarea>
+                    <br></br>
+
+                    {/* timestamped tracklist format options */}
+                    <input defaultChecked={true} onChange={this.onChangeIncludeEndTime} type="checkbox" id="includeEndTime" name="includeEndTime" ></input>
+                    <label htmlFor="includeEndTime"> Include endTime</label>
+
+                    <input defaultChecked={false} onChange={this.onChangeDisplayFilename} type="checkbox" id="displayFilename" name="displayFilename" ></input>
+                    <label htmlFor="displayFilename"> Display filename</label>
+
+
+
                 </div>
 
 
@@ -105,43 +165,51 @@ class App extends Component {
         );
     }
 
-    //when multiple files are selected
-    onChangeMultipleHandler = async (event) => {
-        console.log('onChangeMultipleHandler()')
+    onChangeTextArea = async (e) => {
+
+    }
+
+    //when timestamped tracklist display format options are changed:
+    onChangeIncludeEndTime = async (e) => {
+        console.log('onChangeIncludeEndTime(): ', e.target.checked)
+        let settings = this.state.settings
+        settings.includeEndTime = e.target.checked
         this.setState({
-            parseResultsMultiple: []
+            settings: settings
         });
+    }
 
+    onChangeDisplayFilename = async (e) => {
+        let settings = this.state.settings
+        settings.displayFilename = e.target.checked
+        this.setState({
+            settings: settings
+        });
+    }
 
+    //when multiple files are selected
+    onChangeFilesSelected = async (event) => {
+        console.log('onChangeFilesSelected()')
+        //reset files[] state obj
+        this.setState({
+            files: []
+        })
+        //set default vars
         let startSeconds = 0
         let endSeconds = 0
-        let startTime = '';
-        let endTime = '';
-
-        var timestampedTracklist = ``;
-        
-        console.log('onChangeMultipleHandler() event.target.files=',event.target.files)
+        //get info for each file and append to files[] state var
+        let filesList = []
         for (const file of event.target.files) {
-
-            const parseResult = {
-                file: file
-            };
-
-            this.setState(state => {
-                state.parseResultsMultiple.push(parseResult);
-                return state;
-            });
-
-            //get metadata
+            let fileData = {}
+            //get metadata for file
             try {
+                console.log('getting metadata for ', file.name)
                 const metadata = await this.parseFile(file);
-
+                console.log('got metadata for ', file.name)
                 //get duration (seconds)
                 var durationSeconds = metadata.format.duration;
-                console.log('duration seconds =', durationSeconds)
                 //convert duration to hh:mm:ss
-                var duration = new Date(durationSeconds * 1000).toISOString().substr(11, 8)
-                console.log('duration =', duration)
+                //var duration = new Date(durationSeconds * 1000).toISOString().substr(11, 8)
 
                 //set startSeconds
                 if (endSeconds === 0) {
@@ -151,28 +219,37 @@ class App extends Component {
                 }
                 //set endSeconds
                 endSeconds = startSeconds + durationSeconds
-                //convert to readable times
-                startTime = new Date(startSeconds * 1000).toISOString().substr(11, 8)
-                endTime = new Date(endSeconds * 1000).toISOString().substr(11, 8)
+                //convert times to hh:mm:ss 
+                let startTime = new Date(startSeconds * 1000).toISOString().substr(11, 8)
+                let endTime = new Date(endSeconds * 1000).toISOString().substr(11, 8)
 
-                //get track title
+                let filename = file.name.replace(/\.[^/.]+$/, "")
                 let trackTitle = metadata.common.title;
 
-                timestampedTracklist = `${timestampedTracklist}\n${startTime} - ${endTime} ${trackTitle}`
-                //console.log(`${startTime} - ${endTime} ${trackTitle}`)
+                //timestampedTracklist = `${timestampedTracklist}\n${startTime} - ${endTime} ${trackTitle}`
+                //create fileData obj
+                fileData = {
+                    filename: filename,
+                    trackTitle: trackTitle,
+                    metadata: metadata,
+                    //times
+                    startTime: startTime,
+                    endTime: endTime,
+                    startSeconds: startSeconds,
+                    endSeconds: endSeconds
+                }
+                console.log('pushing fileData to files local var for ', file.name)
+                filesList.push(fileData)
 
-                // Update GUI
-                this.setState(state => {
-                    state.parseResultsMultiple[state.parseResultsMultiple.length - 1].metadata = metadata;
-                    return state;
-                });
             } catch (err) {
-
+                console.log('err getting file metadata: ', err)
             }
-
         }
-
-        console.log(timestampedTracklist)
+        //set files state var
+        this.setState({
+            files: filesList
+        });
+        console.log('onChangeFilesSelected() finished updating files[] state var. ', this.state.files)
     }
 
     //when file upload handler is changed
@@ -212,19 +289,16 @@ class App extends Component {
 
     //get metadata for audio file
     async parseFile(file) {
-        console.log(`Parsing file "${file.name}" of type ${file.type}`);
-
+        //console.log(`Parsing file "${file.name}" of type ${file.type}`);
         return mmb.parseBlob(file, { native: true })
-        .then(metadata => {
-            console.log(`Completed parsing of ${file.name}:`, metadata);
-            return metadata;
-        }).catch((error) => {
-            console.log('parseFile error: ', error)
-        }).finally(()=>{
-            console.log('finally')
-        })
-
-        
+            .then(metadata => {
+                //console.log(`Completed parsing of ${file.name}:`, metadata);
+                return metadata;
+            }).catch((error) => {
+                console.log('parseFile error: ', error)
+            }).finally(() => {
+                //console.log('finally')
+            })
     }
 
 
