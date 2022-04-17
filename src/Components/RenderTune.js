@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './RenderTune.css';
+// import './RenderTune.css';
 
 
 export default class RenderTune extends Component {

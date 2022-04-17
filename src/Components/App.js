@@ -3,6 +3,8 @@ import SidebarColorsTemplate from "./SidebarColorsTemplate"
 import Signup from "./Signup"
 import Login from "./Login"
 import Tagger from "./Tagger"
+import Cssdemo from "./Cssdemo"
+import MainSidebar from "./MainSidebar"
 import RenderTune from "./RenderTune"
 import SidebarCss from "./SidebarCss"
 import ForgotPassword from "./ForgotPassword"
@@ -37,6 +39,12 @@ function App() {
           <Route exact path="/SidebarColorsTemplate" element={ <SidebarColorsTemplate></SidebarColorsTemplate> } />
 
           <Route exact path="/SidebarCss" element={<SidebarCss></SidebarCss>}/>
+
+          
+          <Route exact path="/cssdemo" element={ <Cssdemo> <RenderTune/> </Cssdemo> } />
+
+          
+          <Route exact path="/MainSidebar" element={ <MainSidebar> <RenderTune/> </MainSidebar> } />
 
 
         </Routes>
