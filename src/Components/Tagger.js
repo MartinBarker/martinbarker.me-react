@@ -12,19 +12,19 @@ function closeNav() {
     document.getElementById("main").style.marginLeft = "0";
 }
 
-function formatTime(timeSeconds){
+function formatTime(timeSeconds) {
     let timeStr = ""
     let hh = new Date(timeSeconds * 1000).toISOString().substr(11, 2)
     //if hh are zero
-    if(hh === "00"){
+    if (hh === "00") {
         //dont include hh
         timeStr = new Date(timeSeconds * 1000).toISOString().substr(14, 5)
-    }else{
+    } else {
         //include hh
         timeStr = new Date(timeSeconds * 1000).toISOString().substr(11, 8)
     }
     return timeStr
-}   
+}
 
 function formatTimestampTxt(files, settings) {
     console.log('formatTimestampTxt() files.length=', files.length, ', files=', files)
@@ -39,10 +39,10 @@ function formatTimestampTxt(files, settings) {
     for (const file of files) {
         var txtLine = ""
         //calculate hh:mm:ss startTime
-        if(file.startSeconds < 3600){
+        if (file.startSeconds < 3600) {
             console.log('file.startSeconds < 3600')
             //hourPadding="   "
-        }else{
+        } else {
             console.log('file.startSeconds >= 3600')
             //hourPadding=""
         }
@@ -51,7 +51,7 @@ function formatTimestampTxt(files, settings) {
         var displayEndTime = ""
         if (settings.includeEndTime) {
             displayEndTime = formatTime(file.endSeconds)
-            displayEndTime=` - ${displayEndTime}`
+            displayEndTime = ` - ${displayEndTime}`
         }
         //use metadata title by default, display filename is specified
         var displaySongName = file.trackTitle
@@ -86,22 +86,22 @@ class App extends Component {
             },
             files: [
                 {
-                    filename:'ex1filename',
-                    trackTitle:'ex1title',
-                    startSeconds:0,
-                    endSeconds:360.22857142857
+                    filename: 'ex1filename',
+                    trackTitle: 'ex1title',
+                    startSeconds: 0,
+                    endSeconds: 360.22857142857
                 },
                 {
-                    filename:'ex2filename',
-                    trackTitle:'ex2title',
-                    startSeconds:360.22857142857,
-                    endSeconds:441.6
+                    filename: 'ex2filename',
+                    trackTitle: 'ex2title',
+                    startSeconds: 360.22857142857,
+                    endSeconds: 441.6
                 },
                 {
-                    filename:'ex3filename',
-                    trackTitle:'ex3title',
-                    startSeconds:441.6,
-                    endSeconds:745.9787755102041
+                    filename: 'ex3filename',
+                    trackTitle: 'ex3title',
+                    startSeconds: 441.6,
+                    endSeconds: 745.9787755102041
                 },
             ]
         };
@@ -113,52 +113,34 @@ class App extends Component {
 
         //format files[] using settings{} for timestampTxt
         var timestampTxt = formatTimestampTxt(this.state.files, this.state.settings)
-        console.log('render() timestampTxt=',timestampTxt)
+        console.log('render() timestampTxt=', timestampTxt)
 
         return (
-            <div className="App">
-
-                {/* sidebar */}
-                <div id="mySidebar" className="sidebar">
-                    <a className="closebtn" onClick={closeNav}>×</a>
-                    <a href="">About</a>
-                    <a href="">Services</a>
-                    <a href="">Clients</a>
-                    <a href="">Contact</a>
-                </div>
-
-                {/* main content */}
-                <div id="main">
-                    <button className="openbtn" onClick={openNav}>☰ Open Sidebar</button>
-
-                    <hr></hr>
-                    multiple files:
-                    <input type="file" multiple="multiple" onChange={this.onChangeFilesSelected}></input>
-                    <hr></hr>
-
-                    <input type="file" name="file" onChange={this.onChangeHandler} />
-
-                    {htmlParseResults}
+            <div>
 
 
-                    <br></br>
-                    <hr></hr>
+                multiple files:
+                <input type="file" multiple="multiple" onChange={this.onChangeFilesSelected}></input>
+                <hr></hr>
 
-                    {/* timestamped tracklist output */}
-                    <textarea id='textarea' rows="7" cols="44" onChange={this.onChangeTextArea} value={timestampTxt}></textarea>
-                    <br></br>
+                <input type="file" name="file" onChange={this.onChangeHandler} />
 
-                    {/* timestamped tracklist format options */}
-                    <input defaultChecked={true} onChange={this.onChangeIncludeEndTime} type="checkbox" id="includeEndTime" name="includeEndTime" ></input>
-                    <label htmlFor="includeEndTime"> Include endTime</label>
-
-                    <input defaultChecked={false} onChange={this.onChangeDisplayFilename} type="checkbox" id="displayFilename" name="displayFilename" ></input>
-                    <label htmlFor="displayFilename"> Display filename</label>
+                {htmlParseResults}
 
 
+                <br></br>
+                <hr></hr>
 
-                </div>
+                {/* timestamped tracklist output */}
+                <textarea id='textarea' rows="7" cols="44" onChange={this.onChangeTextArea} value={timestampTxt}></textarea>
+                <br></br>
 
+                {/* timestamped tracklist format options */}
+                <input defaultChecked={true} onChange={this.onChangeIncludeEndTime} type="checkbox" id="includeEndTime" name="includeEndTime" ></input>
+                <label htmlFor="includeEndTime"> Include endTime</label>
+
+                <input defaultChecked={false} onChange={this.onChangeDisplayFilename} type="checkbox" id="displayFilename" name="displayFilename" ></input>
+                <label htmlFor="displayFilename"> Display filename</label>
 
 
             </div>
