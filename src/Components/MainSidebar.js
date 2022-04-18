@@ -1,5 +1,7 @@
 import React from 'react'
+import LazyLoad from './LazyImage'
 import "./MainSidebar.css"
+import LazyImage from "./LazyImage";
 
 const MainSidebar = ({ children }) => {
 
@@ -29,7 +31,6 @@ const MainSidebar = ({ children }) => {
                         ${showSideNav ? 'sidebar-show' : ' '}
                     `}
                 >
-                    <a className="closebtn" onClick={sideNavClicked}>×</a>
                     <a href="#">About</a>
                     <a data-ulid="expand_this" onClick={menuItemClicked} href="#">Expand This ▼</a>
                     <ul className={`
@@ -41,6 +42,19 @@ const MainSidebar = ({ children }) => {
 
                     <a href="#">Clients</a>
                     <a href="#">Contact</a>
+
+                    {/* Image Display LazyLoad */}
+
+                    <div>
+                        <button >Refresh Colors</button>
+                        {/* 
+                        <LazyImage
+                            src={require('../aesthetic-images/HUGE.jpg')}
+                            alt={`Random image`}
+                        />
+                        */}
+
+                    </div>
                 </div>
 
                 <div 
@@ -55,10 +69,9 @@ const MainSidebar = ({ children }) => {
                     <h2>Collapsed Sidebar</h2>
                     <p>Click on the hamburger menu/bar icon to open the sidebar, and push this content to the right.</p>
                     {children}
-                </div>
-                </div>
 
-
+                </div>
+            </div>
         </>
     )
 }

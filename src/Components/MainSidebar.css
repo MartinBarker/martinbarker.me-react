@@ -22,7 +22,6 @@ body {
 
 .sidebar {
   height: 100%;
-  max-height: calc(100% - 15px);
   width: 250px;
   position: absolute;
   z-index: 1;
@@ -30,7 +29,6 @@ body {
   left: 0;
   background-color: #111;
   overflow-x: hidden;
-  padding-top: 60px;
   
   right: 0;
   -webkit-transform: translate3d(calc(-100%), 0, 0);
@@ -79,7 +77,7 @@ body {
 }
 
 #main {
-  padding: 16px;
+    padding-left: 16px;
 }
 
 #main.main-show{
