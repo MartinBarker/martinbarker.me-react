@@ -1,9 +1,12 @@
 import React from 'react'
-import LazyLoad from './LazyImage'
 import "./MainSidebar.css"
-import LazyImage from "./LazyImage";
+import ProgressiveImage from "./ProgressiveImage";
 
 const MainSidebar = ({ children }) => {
+
+    function getRandomImage(){
+
+    }
 
     //toggle open/close sidenav depending on current status
     function sideNavClicked(){
@@ -31,28 +34,33 @@ const MainSidebar = ({ children }) => {
                         ${showSideNav ? 'sidebar-show' : ' '}
                     `}
                 >
-                    <a href="#">About</a>
-                    <a data-ulid="expand_this" onClick={menuItemClicked} href="#">Expand This ▼</a>
-                    <ul className={`
-                        ${toggleMenuItem ? 'ul-show' : ' '}
-                    `}>
-                        <li><a href="#">Coffee</a></li>
-                        <li><a href="#">Coverage</a></li>
+                    <a href="#" className='sidebar-header'>Martin Barker</a>
+                    <a href="#" >About</a>
+                    <a  data-ulid="expand_this" onClick={menuItemClicked} href="#">Projects X</a>
+                    <ul className={` ${toggleMenuItem ? 'ul-show' : ' '} `}>
+                        <li><a  href="#">tagger.site</a></li>
+                        <li><a  href="#">RenderTune</a></li>
+                        <li><a  href="#">Vinyl2Digital</a></li>
+                        <li><a  href="#">Popularify</a></li>
                     </ul>
-
-                    <a href="#">Clients</a>
-                    <a href="#">Contact</a>
+                    <a  href="#">Blog</a>
+                    <a  href="#">Contact</a>
 
                     {/* Image Display LazyLoad */}
 
                     <div>
                         <button >Refresh Colors</button>
-                        {/* 
-                        <LazyImage
-                            src={require('../aesthetic-images/HUGE.jpg')}
-                            alt={`Random image`}
+                        <br></br>
+                        <ProgressiveImage
+                            className={"colorSrcImg"}
+                            alt={"color source image"}
+                            overlaySrc={
+                                require("../aesthetic-images/thumbnails/418112_thumb.jpg")
+                            }
+                            src={
+                                require("../aesthetic-images/418112.jpg")
+                            }
                         />
-                        */}
 
                     </div>
                 </div>

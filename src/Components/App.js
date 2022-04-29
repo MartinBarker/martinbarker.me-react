@@ -8,6 +8,7 @@ import ForgotPassword from "./ForgotPassword"
 import PrivateRoute from './PrivateRoute'
 import UpdateProfile from "./UpdateProfile"
 import Dashboard from "./Dashboard"
+import ResponsiveMobileView from "./ResponsiveMobileView"
 
 import { AuthProvider } from "../Contexts/AuthContext"
 import {
@@ -36,6 +37,8 @@ function App() {
 
           <Route exact path="/rendertune" element={ <MainSidebar> <RenderTune/> </MainSidebar> } />
 
+          <Route exact path="/responsivemobileview" element={ <ResponsiveMobileView></ResponsiveMobileView>} />
+      
         </Routes>
 
       </AuthProvider>
