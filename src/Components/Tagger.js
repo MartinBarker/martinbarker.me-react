@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as mmb from 'music-metadata-browser';
-import './Styling.css';
+import './Tagger.css';
 
 function openNav() {
     document.getElementById("mySidebar").style.width = "250px";
@@ -32,10 +32,6 @@ function formatTimestampTxt(files, settings) {
     //determine if timestamps go longer then an hour, if so append two blank chars "  " to displayStartTime
     let hourPadding = ""
 
-    //console.log('files[files.length-1] = ',  ) //['endSeconds']
-    //if(files[files.length-1].endSeconds >= 3600 ){
-    //    hourPadding="  "
-    //}
     for (const file of files) {
         var txtLine = ""
         //calculate hh:mm:ss startTime
@@ -46,7 +42,7 @@ function formatTimestampTxt(files, settings) {
             console.log('file.startSeconds >= 3600')
             //hourPadding=""
         }
-        var displayStartTime = `${formatTime(file.startSeconds)}${hourPadding}`//new Date(file.startSeconds * 1000).toISOString().substr(11, 8)
+        var displayStartTime = `${formatTime(file.startSeconds)}${hourPadding}`
         //calcualte hh:mm:ss endTime if we need to 
         var displayEndTime = ""
         if (settings.includeEndTime) {
@@ -117,7 +113,22 @@ class App extends Component {
 
         return (
             <div>
+                {/* tagger.site title */}
+                <h1>tagger.site</h1>
+                <h3>Generate timestamped tracklists</h3>
 
+                {/* URL Input */}
+                <div>
+                    <form>
+                        <label>
+                            Input URL ( Discogs, MusicBrainz, BandCamp, Spotify, YouTube Playlist )
+                            <input type="text" name="name" />
+                        </label>
+                        <input type="submit" value="Submit" />
+                    </form>
+                </div>
+
+                {/* tagger.site instructions */}
 
                 multiple files:
                 <input type="file" multiple="multiple" onChange={this.onChangeFilesSelected}></input>
@@ -142,6 +153,24 @@ class App extends Component {
                 <input defaultChecked={false} onChange={this.onChangeDisplayFilename} type="checkbox" id="displayFilename" name="displayFilename" ></input>
                 <label htmlFor="displayFilename"> Display filename</label>
 
+
+
+                {/* Metadata Tags - Output */}
+                <div>
+                    <p>Metadata Output</p>
+                    <textarea>
+                        tag1, tag2, tag3
+                    </textarea>
+                </div>
+
+                {/* Metadata Tags - Options */}
+                <div>
+                    <p>Metadata Tag Options</p>
+                    <textarea>
+                        Max tag char limit = 100
+                    </textarea>
+
+                </div>
 
             </div>
         );

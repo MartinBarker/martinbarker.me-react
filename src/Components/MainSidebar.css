@@ -33,7 +33,7 @@ body {
 
 .sidebar {
   height: 100%;
-  width: 250px;
+  width: 200px;
   position: absolute;
   z-index: 1;
   top: 0;
@@ -66,6 +66,18 @@ body {
   color: #f1f1f1;
 }
 
+.chevron-char{
+  height:22px;
+  color:white;
+}
+
+
+.sidebar-collapsed {
+  transform: rotate(180deg);
+  transition: all 0.25s ease-in-out;
+  display:inline-block;
+}
+
 .sidebar .closebtn {
   position: absolute;
   top: 0;
@@ -74,27 +86,45 @@ body {
   margin-left: 50px;
 }
 
-.openbtn {
+.sidebarBtn {
+  border-radius: 50%;
   font-size: 20px;
   cursor: pointer;
-  background-color: #111;
-  color: white;
+
   padding: 10px 15px;
+  margin-left: -40px;
   border: none;
+
+  background-color: purple;
+  color: brown;
+
+  z-index:100!important;
+
+  box-shadow: 0px 1px 4px 1px rgb(0 0 0 / 30%);
+  cursor: pointer;
 }
 
-.openbtn:hover {
+.collapsed-sidebarBtn{
+  padding-left:222px
+}
+
+.sidebarBtn:hover {
   background-color: #444;
 }
 
 #main {
     padding-left: 16px;
+    z-index:9999!important;
+    display: table;
 }
 
-#main.main-show{
-  -webkit-transform: translate3d(250px, 0, 0);
-  -moz-transform: translate3d(250px, 0, 0);
-  transform: translate3d(250px, 0, 0);
+#main.show-sidebar{
+  -webkit-transform: translate3d(200px, 0, 0);
+  -moz-transform: translate3d(200px, 0, 0);
+  transform: translate3d(200px, 0, 0);
+  margin-right: 190px;
+  min-width: 15px;
+  overflow: overlay;
 }
 
 .main-content .sidebar ul{
