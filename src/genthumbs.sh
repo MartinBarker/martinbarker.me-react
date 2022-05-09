@@ -1,6 +1,7 @@
 #!/bin/bash
 # need to have ImageMagick installed, run on ubuntu with:
 # $ chmod u+x genthumbs.sh
+# $ cd ./src/
 # $ ./genthumbs.sh
 thumbs_folder=./aesthetic-images/thumbnails
 mkdir -p "$thumbs_folder"

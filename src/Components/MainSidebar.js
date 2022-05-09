@@ -1,10 +1,37 @@
-import React from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import "./MainSidebar.css"
 import ProgressiveImage from "./ProgressiveImage";
 import { Link, useNavigate } from "react-router-dom";
+//get images from folder
+
+
+function importAll(r) {
+    return r.keys().map(r);
+}
+const images = importAll(require.context('../aesthetic-images/', (false), (/^\.\/.*$/), ('sync')))
+const thumbnails = importAll(require.context('../aesthetic-images/thumbnails/', (false), (/^\.\/.*$/), ('sync')))
+    
+
+
 const MainSidebar = ({ children }) => {
 
+    useEffect(
+        getRandomImage, // <- function that will run on every dependency update
+        [] // <-- empty dependency array
+    )
+
     function getRandomImage() {
+        console.log('getRandomImage() images=',images.length)
+        console.log('getRandomImage() thumbnails=',thumbnails.length)
+        var randomImgIndex = Math.floor(Math.random() * images.length) + 0
+        console.log('getRandomImage() randomImgIndex=',randomImgIndex)
+        var randomImg = images[randomImgIndex]
+        var randomImgThumbnail = images[randomImgIndex]
+        console.log('randomImg= ', randomImg)
+        console.log('randomImgThumbnail= ', randomImgThumbnail)
+
+        setColorSrcImg(randomImg)
+        setColorSrcImgThumbnail(colorSrcImgThumbnail)
 
     }
 
@@ -24,6 +51,8 @@ const MainSidebar = ({ children }) => {
     const [showSideNav, setShowSideNav] = React.useState(true);
     const [toggleMenuItem, setToggleMenuItem] = React.useState(true);
     const [toggleSidebarIcon, setToggleSidebarIcon] = React.useState(false);
+    const [colorSrcImg, setColorSrcImg] = React.useState("");
+    const [colorSrcImgThumbnail, setColorSrcImgThumbnail] = React.useState("");
 
     return (
         <>
@@ -58,10 +87,12 @@ const MainSidebar = ({ children }) => {
                             className={"colorSrcImg"}
                             alt={"color source image"}
                             overlaySrc={
-                                require("../aesthetic-images/thumbnails/418112_thumb.jpg")
+                                colorSrcImg
+                                //require("../aesthetic-images/thumbnails/418112_thumb.jpg")
                             }
                             src={
-                                require("../aesthetic-images/418112.jpg")
+                                colorSrcImg
+                                //require("../aesthetic-images/418112.jpg")
                             }
                         />
 

@@ -54,7 +54,7 @@ body {
 }
 
 .sidebar a {
-  padding: 8px 8px 8px 32px;
+  padding: 9px 15px 8px 12px;
   text-decoration: none;
   font-size: 19px;
   color: #818181;
@@ -87,6 +87,12 @@ body {
 }
 
 .sidebarBtn {
+  
+  -webkit-transition: -webkit-transform 300ms ease;
+  -webkit-transition-duration: 300ms;
+  -moz-transition: -moz-transform 300ms ease;
+  transition: transform 300ms ease;
+  
   border-radius: 50%;
   font-size: 20px;
   cursor: pointer;
@@ -105,7 +111,7 @@ body {
 }
 
 .collapsed-sidebarBtn{
-  padding-left:222px
+  margin-left:0px;
 }
 
 .sidebarBtn:hover {
