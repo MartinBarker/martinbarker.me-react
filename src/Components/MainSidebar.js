@@ -2,33 +2,26 @@ import React, { useContext, useState, useEffect } from 'react'
 import "./MainSidebar.css"
 import ProgressiveImage from "./ProgressiveImage";
 import { Link, useNavigate } from "react-router-dom";
+import Vibrant from "node-vibrant";
+
 //get images from folder
-
-
 function importAll(r) {
     return r.keys().map(r);
 }
 const images = importAll(require.context('../aesthetic-images/', (false), (/^\.\/.*$/), ('sync')))
 const thumbnails = importAll(require.context('../aesthetic-images/thumbnails/', (false), (/^\.\/.*$/), ('sync')))
     
-
-
 const MainSidebar = ({ children }) => {
-
-    useEffect(
-        getRandomImage, // <- function that will run on every dependency update
-        [] // <-- empty dependency array
-    )
+    useEffect(() => {
+        getRandomImage() // Run! Like go get some data from an API.
+    }, []);
 
     function getRandomImage() {
-        console.log('getRandomImage() images=',images.length)
-        console.log('getRandomImage() thumbnails=',thumbnails.length)
+
         var randomImgIndex = Math.floor(Math.random() * images.length) + 0
-        console.log('getRandomImage() randomImgIndex=',randomImgIndex)
         var randomImg = images[randomImgIndex]
         var randomImgThumbnail = images[randomImgIndex]
-        console.log('randomImg= ', randomImg)
-        console.log('randomImgThumbnail= ', randomImgThumbnail)
+        console.log('getRandomImage() randomImg= ', randomImg)
 
         setColorSrcImg(randomImg)
         setColorSrcImgThumbnail(colorSrcImgThumbnail)
@@ -67,7 +60,7 @@ const MainSidebar = ({ children }) => {
 
                     <a href="#" className='color2'>About</a>
 
-                    <a className="color3" data-ulid="expand_this" onClick={menuItemClicked} href="#">Projects X</a>
+                    <a className="color3" data-ulid="expand_this" onClick={menuItemClicked} href="#">Projects <p id='projects-arrow'>▼</p></a>
                     <ul className={` ${toggleMenuItem ? 'ul-show' : ' '} `}>
                         <li><a href="#">tagger.site</a></li>
                         <li>
@@ -81,20 +74,23 @@ const MainSidebar = ({ children }) => {
 
                     {/* Image Display LazyLoad */}
                     <div className='imgColor'>
-                        <button >Refresh Colors</button>
+                        <button onClick={getRandomImage}>Refresh Colors</button>
                         <br></br>
-                        <ProgressiveImage
-                            className={"colorSrcImg"}
-                            alt={"color source image"}
-                            overlaySrc={
-                                colorSrcImg
-                                //require("../aesthetic-images/thumbnails/418112_thumb.jpg")
-                            }
-                            src={
-                                colorSrcImg
-                                //require("../aesthetic-images/418112.jpg")
-                            }
-                        />
+                        
+
+                        <div className="content">
+                            <div className="row"> 
+                                <div className="cell">
+                                <ProgressiveImage
+                                    className={"colorSrcImg"}
+                                    alt={"color source image"}
+                                    overlaySrc={colorSrcImg}
+                                    src={colorSrcImg}
+                                />
+                                </div>
+                            </div>
+                        </div>
+
 
                     </div>
                 </div>

@@ -9,7 +9,6 @@ import PrivateRoute from './PrivateRoute'
 import UpdateProfile from "./UpdateProfile"
 import Dashboard from "./Dashboard"
 import ResponsiveMobileView from "./ResponsiveMobileView"
-
 import { AuthProvider } from "../Contexts/AuthContext"
 import {
   BrowserRouter as Router,
@@ -17,16 +16,12 @@ import {
   Route,
 } from "react-router-dom";
 
-
-
 function App() {
   return (
-
     <Router>
       <AuthProvider>
-
         <Routes>
-
+          {/* User Auth Stuff */}
           <Route path="/" element={<PrivateRoute> <Dashboard /> </PrivateRoute>} />
           <Route path="/update-profile" element={<PrivateRoute> <UpdateProfile /> </PrivateRoute>} />
           <Route exact path="/signup" element={<Signup />} />
@@ -37,15 +32,10 @@ function App() {
 
           <Route exact path="/rendertune" element={ <MainSidebar> <RenderTune/> </MainSidebar> } />
 
-          <Route exact path="/responsivemobileview" element={ <ResponsiveMobileView></ResponsiveMobileView>} />
       
         </Routes>
-
       </AuthProvider>
     </Router>
-
-
-
   );
 }
 
