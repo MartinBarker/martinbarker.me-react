@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from 'react'
 import "./MainSidebar.css"
 import ProgressiveImage from "./ProgressiveImage";
 import { Link, useNavigate } from "react-router-dom";
-import Vibrant from "node-vibrant";
 
 //get images from folder
 function importAll(r) {
@@ -102,12 +101,16 @@ const MainSidebar = ({ children }) => {
                     <button className={`sidebarBtn ${toggleSidebarIcon ? 'collapsed-sidebarBtn' : ' '} `} onClick={sideNavClicked}>
                         <a className={`chevron-char ${toggleSidebarIcon ? 'sidebar-collapsed' : ' '} `} >&gt;</a>
                     </button>
+                    
+                    {children}
 
+                    {/*
                     <div>
                         <h1>responsive page content responsive page content responsive page content </h1>
                         <br></br>
                         <h4>responsive page content </h4>
                     </div>
+                    */}
 
                     {/* 
                     <div className={`  ${!toggleSidebarIcon ? ' ' : '  '}`}>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import * as mmb from 'music-metadata-browser';
 import './Tagger.css';
 
@@ -36,10 +36,10 @@ function formatTimestampTxt(files, settings) {
         var txtLine = ""
         //calculate hh:mm:ss startTime
         if (file.startSeconds < 3600) {
-            console.log('file.startSeconds < 3600')
+            //console.log('file.startSeconds < 3600')
             //hourPadding="   "
         } else {
-            console.log('file.startSeconds >= 3600')
+            //console.log('file.startSeconds >= 3600')
             //hourPadding=""
         }
         var displayStartTime = `${formatTime(file.startSeconds)}${hourPadding}`
@@ -99,7 +99,10 @@ class App extends Component {
                     startSeconds: 441.6,
                     endSeconds: 745.9787755102041
                 },
-            ]
+            ],
+
+            //url input value
+            URLInputValue: '',
         };
     }
 
@@ -108,8 +111,7 @@ class App extends Component {
         const htmlParseResults = [];
 
         //format files[] using settings{} for timestampTxt
-        var timestampTxt = formatTimestampTxt(this.state.files, this.state.settings)
-        console.log('render() timestampTxt=', timestampTxt)
+        //var timestampTxt = formatTimestampTxt(this.state.files, this.state.settings)
 
         return (
             <div>
@@ -119,13 +121,13 @@ class App extends Component {
 
                 {/* URL Input */}
                 <div>
-                    <form>
-                        <label>
-                            Input URL ( Discogs, MusicBrainz, BandCamp, Spotify, YouTube Playlist )
-                            <input type="text" name="name" />
-                        </label>
-                        <input type="submit" value="Submit" />
-                    </form>
+
+                    <input
+                        placeholder='input url'
+                        value={this.URLInputValue}
+                        onChange={e => this.updateURLInputValue(e)}
+                    />
+                    <button onClick={this.submitURL} >Submit</button>
                 </div>
 
                 {/* tagger.site instructions */}
@@ -138,12 +140,11 @@ class App extends Component {
 
                 {htmlParseResults}
 
-
                 <br></br>
                 <hr></hr>
 
-                {/* timestamped tracklist output */}
-                <textarea id='textarea' rows="7" cols="44" onChange={this.onChangeTextArea} value={timestampTxt}></textarea>
+                {/* timestamped tracklist output 
+                <textarea id='textarea' rows="7" cols="44" onChange={this.onChangeTextArea} defaultValue={timestampTxt}></textarea> */}
                 <br></br>
 
                 {/* timestamped tracklist format options */}
@@ -158,27 +159,37 @@ class App extends Component {
                 {/* Metadata Tags - Output */}
                 <div>
                     <p>Metadata Output</p>
-                    <textarea>
-                        tag1, tag2, tag3
-                    </textarea>
+                    <textarea defaultValue={"tag1, tag2, tag3"}></textarea>
                 </div>
 
                 {/* Metadata Tags - Options */}
                 <div>
                     <p>Metadata Tag Options</p>
-                    <textarea>
-                        Max tag char limit = 100
-                    </textarea>
-
+                    <textarea defaultValue={"Max tag char limit = 100"}></textarea>
                 </div>
 
             </div>
         );
-    }
-
-    onChangeTextArea = async (e) => {
 
     }
+
+    submitURL = async (e='') => {
+        if(e != ''){
+            var url = this.state.URLInputValue
+            console.log('submitURL(), url = ', this.state.URLInputValue)
+            //determine which api to query
+            if(url.includes('bandcamp.com')){
+
+            }
+        }
+    }
+
+    updateURLInputValue = async (e) => {
+        const val = e.target.value;
+        console.log(`updateInputValue() ${val}`)
+        this.setState({ URLInputValue: val });
+    }
+
 
     //when timestamped tracklist display format options are changed:
     onChangeIncludeEndTime = async (e) => {
