@@ -1,6 +1,11 @@
 import React, { Component, useState } from 'react';
 import * as mmb from 'music-metadata-browser';
 import './Tagger.css';
+import axios from 'axios';
+
+//api inputs
+var bandcamp = require("bandcamp-scraper");
+
 
 function openNav() {
     document.getElementById("mySidebar").style.width = "250px";
@@ -173,15 +178,38 @@ class App extends Component {
 
     }
 
+   
     submitURL = async (e='') => {
+        console.log('submitURL')
+        componentDidMount()
+        function componentDidMount(){
+            console.log('axios begin')
+            axios.get(`https://ultramajic.bandcamp.com/album/the-ashtar-lavanda-mix`)
+              .then(res => {
+                const persons = res.data;
+                console.log('persons=',persons)
+              })
+          };
+        /*
         if(e != ''){
             var url = this.state.URLInputValue
             console.log('submitURL(), url = ', this.state.URLInputValue)
+            url="https://ultramajic.bandcamp.com/album/the-ashtar-lavanda-mix"
             //determine which api to query
             if(url.includes('bandcamp.com')){
 
+                var albumUrl = "http://musique.coeurdepirate.com/album/blonde";
+                bandcamp.getAlbumInfo(albumUrl, function (error, albumInfo) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log(albumInfo);
+                }
+                });
+
             }
         }
+        */
     }
 
     updateURLInputValue = async (e) => {
