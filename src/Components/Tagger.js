@@ -178,38 +178,59 @@ class App extends Component {
 
     }
 
-   
-    submitURL = async (e='') => {
-        console.log('submitURL')
-        componentDidMount()
-        function componentDidMount(){
-            console.log('axios begin')
-            axios.get(`https://ultramajic.bandcamp.com/album/the-ashtar-lavanda-mix`)
-              .then(res => {
-                const persons = res.data;
-                console.log('persons=',persons)
-              })
-          };
+
+    submitURL = async (e = '') => {
+        console.log('submitURL() ')
+
+        var url = this.state.URLInputValue
+        console.log('submitURL(), url = ', url)
+        //determine which api to query
+
+        //make request to node express proxy to avoid CORS
+
+        //fetch('http://localhost:8080/bandcamp?url=https://ultramajic.bandcamp.com/album/the-ashtar-lavanda-mix')
+        //    .then(response => console.log('response=', response))
+        //    .then(data => console.log('data=', data));
+
+        fetch(`/bandcamp?url=${url}`, { 
+            method: 'get', 
+            headers: new Headers({
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }), 
+        })
+        .then(response => response.json())
+        .then(response => 
+            console.log('response=', response)
+        );
+
         /*
-        if(e != ''){
-            var url = this.state.URLInputValue
-            console.log('submitURL(), url = ', this.state.URLInputValue)
-            url="https://ultramajic.bandcamp.com/album/the-ashtar-lavanda-mix"
-            //determine which api to query
-            if(url.includes('bandcamp.com')){
-
-                var albumUrl = "http://musique.coeurdepirate.com/album/blonde";
-                bandcamp.getAlbumInfo(albumUrl, function (error, albumInfo) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log(albumInfo);
-                }
-                });
-
-            }
-        }
+        var http = require ('http');
+        http.get ({
+            host: 'http://localhost/bandcamp?url=https://ultram',
+            port: 8080,
+            path: ''
+        }, function (response) {
+            console.log('proxy rsp = ', response);
+        });
         */
+
+        /*
+        axios.request({
+            url: `localhost:8080/bandcamp?url=${url}`,
+            method: 'get',
+            headers: {
+                'Authorization': `Basic Martin`
+            }
+
+        }).then(rsp => {
+
+            console.log('bandcamp rsp = ', rsp)
+
+        }).catch(function (error) {
+            console.log('Request failed', error)
+        });
+        */
+
     }
 
     updateURLInputValue = async (e) => {
