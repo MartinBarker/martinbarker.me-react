@@ -1,107 +1,180 @@
+#mySidebar{
+  height:100%;
+}
+
+.colorSrcImg{
+  width:100%
+}
+
+.sidebar-txt{
+  font-size: 7px;
+
+}
+
 html,
 body {
-  font-family: "Lato", sans-serif;
-  height: 100%;
-  margin: 0;
+font-family: "Lato", sans-serif;
+height: 100%;
+margin: 0;
 }
 
 .super-animation{
-  -webkit-transition: -webkit-transform 300ms ease;
-  -webkit-transition-duration: 300ms;
-  -moz-transition: -moz-transform 300ms ease;
-  transition: transform 300ms ease;
+-webkit-transition: -webkit-transform 300ms ease;
+-webkit-transition-duration: 300ms;
+-moz-transition: -moz-transform 300ms ease;
+transition: transform 300ms ease;
 }
 
 .main-content{
-  margin: 0;
-  display: flex;
-  position: relative;
-  width: 100%;
-  height: 100%;
+margin: 0;
+display: flex;
+position: relative;
+height:100%;
 }
 
 .sidebar {
-  height: 100%;
-  max-height: calc(100% - 15px);
-  width: 250px;
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  padding-top: 60px;
-  
-  right: 0;
-  -webkit-transform: translate3d(calc(-100%), 0, 0);
-  -moz-transform: translate3d(calc(-100%), 0, 0);
-  transform: translate3d(calc(-100%), 0, 0);
+width: 200px;
+position: absolute;
+z-index: 1;
+top: 0;
+left: 0;
+background-color: #111;
+overflow: hidden;
+
+right: 0;
+-webkit-transform: translate3d(calc(-100%), 0, 0);
+-moz-transform: translate3d(calc(-100%), 0, 0);
+transform: translate3d(calc(-100%), 0, 0);
 }
 
 .sidebar.sidebar-show{
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
+-webkit-transform: translate3d(0, 0, 0);
+-moz-transform: translate3d(0, 0, 0);
+transform: translate3d(0, 0, 0);
 }
 
 .sidebar a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
+padding: 9px 15px 8px 12px;
+text-decoration: none;
+font-size: 19px;
+color: #818181;
+display: block;
+transition: 0.3s;
 }
 
 .sidebar a:hover {
-  color: #f1f1f1;
+color: #f1f1f1;
+}
+
+.chevron-char{
+height:22px;
+color:white;
+}
+
+
+.sidebar-collapsed {
+transform: rotate(180deg);
+transition: all 0.25s ease-in-out;
+display:inline-block;
 }
 
 .sidebar .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
+position: absolute;
+top: 0;
+right: 25px;
+font-size: 36px;
+margin-left: 50px;
 }
 
-.openbtn {
-  font-size: 20px;
-  cursor: pointer;
-  background-color: #111;
-  color: white;
-  padding: 10px 15px;
-  border: none;
+.sidebarBtn {
+margin-left:5px;
+margin-top: 5px;
+margin-bottom: 5px;
+
+-webkit-transition: -webkit-transform 300ms ease;
+-webkit-transition-duration: 300ms;
+-moz-transition: -moz-transform 300ms ease;
+transition: transform 300ms ease;
+
+border-radius: 50%;
+font-size: 20px;
+cursor: pointer;
+
+padding: 10px 15px;
+border: none;
+
+background-color: purple;
+color: brown;
+
+z-index:100!important;
+
+box-shadow: 0px 1px 4px 1px rgb(0 0 0 / 30%);
+cursor: pointer;
 }
 
-.openbtn:hover {
-  background-color: #444;
+.collapsed-sidebarBtn{
+
+}
+
+.sidebarBtn:hover {
+background-color: #444;
 }
 
 #main {
-  padding: 16px;
+  padding-left: 16px;
+  z-index:9999!important;
+  display: table;
 }
 
-#main.main-show{
-  -webkit-transform: translate3d(250px, 0, 0);
-  -moz-transform: translate3d(250px, 0, 0);
-  transform: translate3d(250px, 0, 0);
+#main.show-sidebar{
+-webkit-transform: translate3d(200px, 0, 0);
+-moz-transform: translate3d(200px, 0, 0);
+transform: translate3d(200px, 0, 0);
+margin-right: 190px;
+min-width: 15px;
+overflow: overlay;
 }
 
 .main-content .sidebar ul{
-  margin: 0;
-  max-height: 0px;
-  overflow: hidden;
-  transition: max-height 200ms ;
+margin: 0;
+max-height: 0px;
+overflow: hidden;
+transition: max-height 200ms ;
 }
 
 .main-content .sidebar ul.ul-show{
-  transition: max-height 200ms ease-in;
-  max-height: 400px;
+transition: max-height 200ms ease-in;
+max-height: 400px;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
-  .sidebar {padding-top: 15px;}
-  .sidebar a {font-size: 18px;}
+.sidebar {padding-top: 15px;}
+.sidebar a {font-size: 18px;}
+}
+
+
+/* color src img style */
+#colorImageDisplay {
+border-radius: 5px;
+cursor: pointer;
+transition: 0.3s;
+}
+
+.responsive {
+width: 90%;
+bottom: 20px;
+margin-left: 5%;
+margin-right: 5%;
+display:block;
+}
+
+img {
+vertical-align: middle;
+border-style: none;
+}
+
+/* sidebar arrow */
+#projects-arrow{
+display:contents!important
 }

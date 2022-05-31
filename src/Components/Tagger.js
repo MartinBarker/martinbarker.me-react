@@ -1,16 +1,6 @@
 import React, { Component } from 'react';
 import * as mmb from 'music-metadata-browser';
-import './Styling.css';
-
-function openNav() {
-    document.getElementById("mySidebar").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
-}
-
-function closeNav() {
-    document.getElementById("mySidebar").style.width = "0";
-    document.getElementById("main").style.marginLeft = "0";
-}
+import './Tagger.css';
 
 function formatTime(timeSeconds) {
     let timeStr = ""
@@ -32,21 +22,17 @@ function formatTimestampTxt(files, settings) {
     //determine if timestamps go longer then an hour, if so append two blank chars "  " to displayStartTime
     let hourPadding = ""
 
-    //console.log('files[files.length-1] = ',  ) //['endSeconds']
-    //if(files[files.length-1].endSeconds >= 3600 ){
-    //    hourPadding="  "
-    //}
     for (const file of files) {
         var txtLine = ""
         //calculate hh:mm:ss startTime
         if (file.startSeconds < 3600) {
-            console.log('file.startSeconds < 3600')
+            //console.log('file.startSeconds < 3600')
             //hourPadding="   "
         } else {
-            console.log('file.startSeconds >= 3600')
+            //console.log('file.startSeconds >= 3600')
             //hourPadding=""
         }
-        var displayStartTime = `${formatTime(file.startSeconds)}${hourPadding}`//new Date(file.startSeconds * 1000).toISOString().substr(11, 8)
+        var displayStartTime = `${formatTime(file.startSeconds)}${hourPadding}`
         //calcualte hh:mm:ss endTime if we need to 
         var displayEndTime = ""
         if (settings.includeEndTime) {
@@ -103,7 +89,10 @@ class App extends Component {
                     startSeconds: 441.6,
                     endSeconds: 745.9787755102041
                 },
-            ]
+            ],
+
+            //url input value
+            URLInputValue: '',
         };
     }
 
@@ -112,44 +101,138 @@ class App extends Component {
         const htmlParseResults = [];
 
         //format files[] using settings{} for timestampTxt
-        var timestampTxt = formatTimestampTxt(this.state.files, this.state.settings)
-        console.log('render() timestampTxt=', timestampTxt)
+        //var timestampTxt = formatTimestampTxt(this.state.files, this.state.settings)
 
         return (
             <div>
+                {/* tagger.site title */}
+                <h1>tagger.site</h1>
+                
+                {/* tagger.site instructions */}
+                <p>Generate timestamped tracklists using audio files or a Discogs/Bandcamp/MusicBrainz URL</p>
 
+                {/* Input */}
+                <h3>Input:</h3>
+                <div>
+                    
+                    {/* URL Input */}
+                    <button onClick={this.submitURL} >Submit URL</button>
+                    <input
+                        placeholder='Enter URL'
+                        value={this.URLInputValue}
+                        onChange={e => this.updateURLInputValue(e)}
+                    />
+                    
+                    <br></br>
 
-                multiple files:
-                <input type="file" multiple="multiple" onChange={this.onChangeFilesSelected}></input>
+                    {/* Files Selector */}
+                    <input 
+                        type="file" 
+                        multiple="multiple" 
+                        onChange={this.onChangeFilesSelected}
+                    />
+                    <br></br>
+                    Or drag files into this webpage
+
+                </div>
                 <hr></hr>
 
-                <input type="file" name="file" onChange={this.onChangeHandler} />
-
-                {htmlParseResults}
-
-
+                {/* Timestamped Tracklist Output */}
+                <div>
+                    <h3>Timestamped Tracklist:</h3>
+                    <textarea id='textarea' rows="7" cols="44" onChange={this.onChangeTextArea} defaultValue=""></textarea> 
+                </div>
                 <br></br>
+
+                {/* Timestamped Tracklist Options */}
+                <div>
+                    <h4>Options:</h4>
+                    <input defaultChecked={true} onChange={this.onChangeIncludeEndTime} type="checkbox" id="includeEndTime" name="includeEndTime" ></input>
+                    <label htmlFor="includeEndTime"> Include endTime</label>
+
+                    <input defaultChecked={false} onChange={this.onChangeDisplayFilename} type="checkbox" id="displayFilename" name="displayFilename" ></input>
+                    <label htmlFor="displayFilename"> Display filename</label>
+                </div>
                 <hr></hr>
 
-                {/* timestamped tracklist output */}
-                <textarea id='textarea' rows="7" cols="44" onChange={this.onChangeTextArea} value={timestampTxt}></textarea>
-                <br></br>
+                {/* Metadata Tags Output */}
+                <div>
+                    <h3>Metadata Tags:</h3>
+                    <textarea defaultValue={"tag1, tag2, tag3"}></textarea>
+                </div>
 
-                {/* timestamped tracklist format options */}
-                <input defaultChecked={true} onChange={this.onChangeIncludeEndTime} type="checkbox" id="includeEndTime" name="includeEndTime" ></input>
-                <label htmlFor="includeEndTime"> Include endTime</label>
-
-                <input defaultChecked={false} onChange={this.onChangeDisplayFilename} type="checkbox" id="displayFilename" name="displayFilename" ></input>
-                <label htmlFor="displayFilename"> Display filename</label>
-
+                {/* Metadata Tags - Options */}
+                <div>
+                    <h4>Metadata Tag Options:</h4>
+                    <textarea defaultValue={"Max tag char limit = 100"}></textarea>
+                </div>
 
             </div>
         );
-    }
-
-    onChangeTextArea = async (e) => {
 
     }
+
+
+    submitURL = async (e = '') => {
+        console.log('submitURL() ')
+
+        var url = this.state.URLInputValue
+        console.log('submitURL(), url = ', url)
+        //determine which api to query
+
+        //make request to node express proxy to avoid CORS
+
+        //fetch('http://localhost:8080/bandcamp?url=https://ultramajic.bandcamp.com/album/the-ashtar-lavanda-mix')
+        //    .then(response => console.log('response=', response))
+        //    .then(data => console.log('data=', data));
+
+        fetch(`/bandcamp?url=${url}`, { 
+            method: 'get', 
+            headers: new Headers({
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }), 
+        })
+        .then(response => response.json())
+        .then(response => 
+            console.log('response=', response)
+        );
+
+        /*
+        var http = require ('http');
+        http.get ({
+            host: 'http://localhost/bandcamp?url=https://ultram',
+            port: 8080,
+            path: ''
+        }, function (response) {
+            console.log('proxy rsp = ', response);
+        });
+        */
+
+        /*
+        axios.request({
+            url: `localhost:8080/bandcamp?url=${url}`,
+            method: 'get',
+            headers: {
+                'Authorization': `Basic Martin`
+            }
+
+        }).then(rsp => {
+
+            console.log('bandcamp rsp = ', rsp)
+
+        }).catch(function (error) {
+            console.log('Request failed', error)
+        });
+        */
+
+    }
+
+    updateURLInputValue = async (e) => {
+        const val = e.target.value;
+        console.log(`updateInputValue() ${val}`)
+        this.setState({ URLInputValue: val });
+    }
+
 
     //when timestamped tracklist display format options are changed:
     onChangeIncludeEndTime = async (e) => {
