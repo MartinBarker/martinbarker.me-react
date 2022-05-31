@@ -1,15 +1,14 @@
 import React, { useRef, useState } from 'react'
 import { useAuth } from '../Contexts/AuthContext'
-import { Link, useNavigate } from "react-router-dom";
+import { Link,  } from "react-router-dom";
 
 export default function ForgotPassword() {
     //hooks
     const emailRef = useRef()
-    const { login, currentUser, resetPassword } = useAuth()
+    const {currentUser, resetPassword } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState(false)
-    const navigate = useNavigate();
 
     async function handleSubmit(e){
         e.preventDefault()

@@ -1,7 +1,7 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import "./MainSidebar.css"
 import ProgressiveImage from "./ProgressiveImage";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 //get images from folder
 function importAll(r) {
@@ -19,11 +19,11 @@ const MainSidebar = ({ children }) => {
 
         var randomImgIndex = Math.floor(Math.random() * images.length) + 0
         var randomImg = images[randomImgIndex]
-        var randomImgThumbnail = images[randomImgIndex]
+        var randomImgThumbnail = thumbnails[randomImgIndex]
         console.log('getRandomImage() randomImg= ', randomImg)
 
         setColorSrcImg(randomImg)
-        setColorSrcImgThumbnail(colorSrcImgThumbnail)
+        setColorSrcImgThumbnail(randomImgThumbnail)
 
     }
 
@@ -54,28 +54,28 @@ const MainSidebar = ({ children }) => {
                     {/* Martin Barker */}
                     <div className="color0">
                         {/* Name Text */}
-                        <a href="#" className='sidebar-header color1'>Martin Barker</a>
+                        <a href="# " className='sidebar-header color1'>Martin Barker</a>
                     </div>
 
-                    <a href="#" className='color2'>About</a>
+                    <a href="# " className='color2'>About</a>
 
-                    <a className="color3" data-ulid="expand_this" onClick={menuItemClicked} href="#">Projects <p id='projects-arrow'>▼</p></a>
+                    <a className="color3" data-ulid="expand_this" onClick={menuItemClicked} href="# ">Projects <p id='projects-arrow'>▼</p></a>
                     <ul className={` ${toggleMenuItem ? 'ul-show' : ' '} `}>
-                        <li><a href="#">tagger.site</a></li>
+                        <li><a href="# ">tagger.site</a></li>
                         <li>
                             <Link to="/rendertune">RenderTune</Link>
                         </li>
-                        <li><a href="#">Vinyl2Digital</a></li>
-                        <li><a href="#">Popularify</a></li>
+                        <li><a href="# ">Vinyl2Digital</a></li>
+                        <li><a href="# ">Popularify</a></li>
                     </ul>
-                    <a href="#">Blog</a>
-                    <a href="#">Contact</a>
+                    <a href="# ">Blog</a>
+                    <a href="# ">Contact</a>
 
                     {/* Image Display LazyLoad */}
                     <div className='imgColor'>
                         <button onClick={getRandomImage}>Refresh Colors</button>
                         <br></br>
-                        
+                        <p>img colors</p>
 
                         <div className="content">
                             <div className="row"> 
@@ -83,40 +83,25 @@ const MainSidebar = ({ children }) => {
                                 <ProgressiveImage
                                     className={"colorSrcImg"}
                                     alt={"color source image"}
-                                    overlaySrc={colorSrcImg}
+                                    overlaySrc={colorSrcImgThumbnail}
                                     src={colorSrcImg}
                                 />
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
+                    
                 </div>
 
                 {/* Page Contents */}
                 <div id="main" className={` super-animation ${showSideNav ? 'show-sidebar' : ' '} `}>
 
                     {/* Open & Close Sidebar Button */}
-                    <button className={`sidebarBtn ${toggleSidebarIcon ? 'collapsed-sidebarBtn' : ' '} `} onClick={sideNavClicked}>
+                    <button  className={`sidebarBtn ${toggleSidebarIcon ? 'collapsed-sidebarBtn' : ' '} `} onClick={sideNavClicked}>
                         <a className={`chevron-char ${toggleSidebarIcon ? 'sidebar-collapsed' : ' '} `} >&gt;</a>
                     </button>
                     
                     {children}
-
-                    {/*
-                    <div>
-                        <h1>responsive page content responsive page content responsive page content </h1>
-                        <br></br>
-                        <h4>responsive page content </h4>
-                    </div>
-                    */}
-
-                    {/* 
-                    <div className={`  ${!toggleSidebarIcon ? ' ' : '  '}`}>
-                        {children}
-                    </div>
-                    */}
 
                 </div>
             </div>

@@ -8,7 +8,6 @@ import ForgotPassword from "./ForgotPassword"
 import PrivateRoute from './PrivateRoute'
 import UpdateProfile from "./UpdateProfile"
 import Dashboard from "./Dashboard"
-import ResponsiveMobileView from "./ResponsiveMobileView"
 import { AuthProvider } from "../Contexts/AuthContext"
 import {
   BrowserRouter as Router,

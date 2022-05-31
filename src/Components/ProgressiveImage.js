@@ -30,7 +30,7 @@ export default class ProgressiveImage extends Component {
         <img
           id="colorImageDisplay" 
           className='responsive'
-          alt="color source image alt description"
+          alt=""
           {...filteredProps}
           onLoad={() => {
             this.setState({ highResImageLoaded: true });
@@ -42,7 +42,7 @@ export default class ProgressiveImage extends Component {
         />
         <img
           id="colorImageDisplay" 
-          alt="color source image alt description"
+          alt=""
           {...filteredProps}
           className={`responsive ${this.props.className} ${overlayStyles}`}
           {...highResImageLoaded && { style: { opacity: "0", display:"none" } }}

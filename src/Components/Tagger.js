@@ -1,21 +1,6 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import * as mmb from 'music-metadata-browser';
 import './Tagger.css';
-import axios from 'axios';
-
-//api inputs
-var bandcamp = require("bandcamp-scraper");
-
-
-function openNav() {
-    document.getElementById("mySidebar").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
-}
-
-function closeNav() {
-    document.getElementById("mySidebar").style.width = "0";
-    document.getElementById("main").style.marginLeft = "0";
-}
 
 function formatTime(timeSeconds) {
     let timeStr = ""
@@ -122,54 +107,63 @@ class App extends Component {
             <div>
                 {/* tagger.site title */}
                 <h1>tagger.site</h1>
-                <h3>Generate timestamped tracklists</h3>
+                
+                {/* tagger.site instructions */}
+                <p>Generate timestamped tracklists using audio files or a Discogs/Bandcamp/MusicBrainz URL</p>
 
-                {/* URL Input */}
+                {/* Input */}
+                <h3>Input:</h3>
                 <div>
-
+                    
+                    {/* URL Input */}
+                    <button onClick={this.submitURL} >Submit URL</button>
                     <input
-                        placeholder='input url'
+                        placeholder='Enter URL'
                         value={this.URLInputValue}
                         onChange={e => this.updateURLInputValue(e)}
                     />
-                    <button onClick={this.submitURL} >Submit</button>
+                    
+                    <br></br>
+
+                    {/* Files Selector */}
+                    <input 
+                        type="file" 
+                        multiple="multiple" 
+                        onChange={this.onChangeFilesSelected}
+                    />
+                    <br></br>
+                    Or drag files into this webpage
+
                 </div>
-
-                {/* tagger.site instructions */}
-
-                multiple files:
-                <input type="file" multiple="multiple" onChange={this.onChangeFilesSelected}></input>
                 <hr></hr>
 
-                <input type="file" name="file" onChange={this.onChangeHandler} />
-
-                {htmlParseResults}
-
-                <br></br>
-                <hr></hr>
-
-                {/* timestamped tracklist output 
-                <textarea id='textarea' rows="7" cols="44" onChange={this.onChangeTextArea} defaultValue={timestampTxt}></textarea> */}
-                <br></br>
-
-                {/* timestamped tracklist format options */}
-                <input defaultChecked={true} onChange={this.onChangeIncludeEndTime} type="checkbox" id="includeEndTime" name="includeEndTime" ></input>
-                <label htmlFor="includeEndTime"> Include endTime</label>
-
-                <input defaultChecked={false} onChange={this.onChangeDisplayFilename} type="checkbox" id="displayFilename" name="displayFilename" ></input>
-                <label htmlFor="displayFilename"> Display filename</label>
-
-
-
-                {/* Metadata Tags - Output */}
+                {/* Timestamped Tracklist Output */}
                 <div>
-                    <p>Metadata Output</p>
+                    <h3>Timestamped Tracklist:</h3>
+                    <textarea id='textarea' rows="7" cols="44" onChange={this.onChangeTextArea} defaultValue=""></textarea> 
+                </div>
+                <br></br>
+
+                {/* Timestamped Tracklist Options */}
+                <div>
+                    <h4>Options:</h4>
+                    <input defaultChecked={true} onChange={this.onChangeIncludeEndTime} type="checkbox" id="includeEndTime" name="includeEndTime" ></input>
+                    <label htmlFor="includeEndTime"> Include endTime</label>
+
+                    <input defaultChecked={false} onChange={this.onChangeDisplayFilename} type="checkbox" id="displayFilename" name="displayFilename" ></input>
+                    <label htmlFor="displayFilename"> Display filename</label>
+                </div>
+                <hr></hr>
+
+                {/* Metadata Tags Output */}
+                <div>
+                    <h3>Metadata Tags:</h3>
                     <textarea defaultValue={"tag1, tag2, tag3"}></textarea>
                 </div>
 
                 {/* Metadata Tags - Options */}
                 <div>
-                    <p>Metadata Tag Options</p>
+                    <h4>Metadata Tag Options:</h4>
                     <textarea defaultValue={"Max tag char limit = 100"}></textarea>
                 </div>
 

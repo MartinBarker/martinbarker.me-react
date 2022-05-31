@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { useAuth } from '../Contexts/AuthContext'
-import { Link, useNavigate } from "react-router-dom";
+import { Link,  } from "react-router-dom";
 
 export default function Signup() {
     const emailRef = useRef()
@@ -9,7 +9,6 @@ export default function Signup() {
     const { signup, currentUser } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
-    const navigate = useNavigate();
 
     async function handleSubmit(e){
         e.preventDefault()
