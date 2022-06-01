@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import "./MainSidebar.css"
 import ProgressiveImage from "./ProgressiveImage";
 import { Link } from "react-router-dom";
+import { ColorExtractor } from 'react-color-extractor'
 
 //get images from folder
 function importAll(r) {
@@ -12,11 +13,11 @@ const thumbnails = importAll(require.context('../aesthetic-images/thumbnails/', 
     
 const MainSidebar = ({ children }) => {
     useEffect(() => {
-        getRandomImage() // Run! Like go get some data from an API.
+        getRandomImage() 
     }, []);
 
     function getRandomImage() {
-
+        console.log('getRandomImage()')
         var randomImgIndex = Math.floor(Math.random() * images.length) + 0
         var randomImg = images[randomImgIndex]
         var randomImgThumbnail = thumbnails[randomImgIndex]
@@ -85,6 +86,11 @@ const MainSidebar = ({ children }) => {
                                     alt={"color source image"}
                                     overlaySrc={colorSrcImgThumbnail}
                                     src={colorSrcImg}
+                                />
+                                <ColorExtractor
+                                    onError={error => console.log(error)}
+                                    src={colorSrcImgThumbnail}
+                                    getColors={colors => console.log(colors)}
                                 />
                                 </div>
                             </div>

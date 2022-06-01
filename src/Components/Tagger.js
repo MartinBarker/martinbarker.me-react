@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import * as mmb from 'music-metadata-browser';
 import './Tagger.css';
+import { FileUploader } from "react-drag-drop-files";
+
 
 function formatTime(timeSeconds) {
     let timeStr = ""
@@ -96,10 +98,15 @@ class App extends Component {
         };
     }
 
+    handleFileUpload = (files) => {
+        console.log("handleFileUpload files=", files);
+    };
+
     //render page content
     render() {
         const htmlParseResults = [];
 
+        
         //format files[] using settings{} for timestampTxt
         //var timestampTxt = formatTimestampTxt(this.state.files, this.state.settings)
 
@@ -107,7 +114,11 @@ class App extends Component {
             <div>
                 {/* tagger.site title */}
                 <h1>tagger.site</h1>
-                
+
+                <h1>drag drop files ex</h1>
+                <FileUploader handleChange={this.handleFileUpload} multiple={true} name="file" />
+  
+
                 {/* tagger.site instructions */}
                 <p>Generate timestamped tracklists using audio files or a Discogs/Bandcamp/MusicBrainz URL</p>
 
@@ -172,7 +183,6 @@ class App extends Component {
 
     }
 
-
     submitURL = async (e = '') => {
         console.log('submitURL() ')
 
@@ -232,7 +242,6 @@ class App extends Component {
         console.log(`updateInputValue() ${val}`)
         this.setState({ URLInputValue: val });
     }
-
 
     //when timestamped tracklist display format options are changed:
     onChangeIncludeEndTime = async (e) => {
@@ -365,9 +374,6 @@ class App extends Component {
                 //console.log('finally')
             })
     }
-
-
-
 
 }
 
