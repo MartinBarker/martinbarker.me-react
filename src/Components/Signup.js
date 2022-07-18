@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { useAuth } from '../Contexts/AuthContext'
-import { Link,  } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Signup() {
     const emailRef = useRef()
@@ -33,7 +33,13 @@ export default function Signup() {
         <>
             <h2>Signup</h2>
             <h3>Signed in user: {currentUser && currentUser.email}</h3>
+
             {error && <h1>error={error}</h1>}
+
+
+            {/* gmail sign up */}
+            
+            {/* email / password sign up */}
             <form onSubmit={handleSubmit}>
                 <label >Email:</label>
                 <br></br>

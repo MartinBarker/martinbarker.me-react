@@ -16,12 +16,18 @@ const MainSidebar = ({ children }) => {
         getRandomImage() 
     }, []);
 
-    function getRandomImage() {
+    async function getRandomImage() {
         console.log('getRandomImage()')
         var randomImgIndex = Math.floor(Math.random() * images.length) + 0
         var randomImg = images[randomImgIndex]
         var randomImgThumbnail = thumbnails[randomImgIndex]
         console.log('getRandomImage() randomImg= ', randomImg)
+        //get colors
+        //ColorThief
+        //const colorThief = new ColorThief();
+        //let results = colorThief.getColor(randomImg)
+        
+
 
         setColorSrcImg(randomImg)
         setColorSrcImgThumbnail(randomImgThumbnail)
@@ -87,11 +93,11 @@ const MainSidebar = ({ children }) => {
                                     overlaySrc={colorSrcImgThumbnail}
                                     src={colorSrcImg}
                                 />
-                                <ColorExtractor
-                                    onError={error => console.log(error)}
-                                    src={colorSrcImgThumbnail}
-                                    getColors={colors => console.log(colors)}
-                                />
+                                
+                                <ColorExtractor getColors={colors => console.log(`colors=`,colors)}>
+                                    <img src={`${colorSrcImg}`} alt="test img" style={{ display: 'none'}} />
+                                </ColorExtractor>
+
                                 </div>
                             </div>
                         </div>
