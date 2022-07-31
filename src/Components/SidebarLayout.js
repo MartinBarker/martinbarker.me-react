@@ -7,9 +7,10 @@ const SidebarLayout = ({ children }) => {
         <>
             
             <div>
-                <label htmlFor="sidebar-checkbox" className="sidebar-toggle"></label>
 
+                <label htmlFor="sidebar-checkbox" className="sidebar-toggle"></label>
                 <input type="checkbox" className="sidebar-checkbox" id="sidebar-checkbox"></input>
+
 
                 <div className="sidebar" id="sidebar">
 
@@ -31,13 +32,29 @@ const SidebarLayout = ({ children }) => {
                 </div>
 
                 <div className="wrap">
-                    page content page content page content page content <br></br>
-                    page content page content page content page content <br></br>
+                    
+                    <div className="topnav">
+                        <a className="active" href="#home">Home</a>
+                        <a href="#news">News</a>
+                        <a href="#contact">Contact</a>
+                        <a href="#about">About</a>
+                    </div>
+                    
+                    page content page content page content page content 
+                    <br></br>
+                    page content page content page content page content 
                     <hr></hr>
                     page content page content page content page content 
+                    <br></br>
+                    page content page content page content page content 
+                    <hr></hr>
+                    page content page content page content page content 
+                    <br></br>
+                    page content page content page content page content 
+                    <hr></hr>
+                    
+                
                 </div>
-
-                page content pagepage content page
 
             </div>
         </>
