@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './SidebarLayout.css';
 import { Link } from "react-router-dom";
+import { useAuth }  from "../../Contexts/AuthContext"
 
 const SidebarLayout = ({ children }) => {
-
+    const [error, setError] = useState("")
+    
     const mediaQuery = window.matchMedia("(min-width: 42rem)");
     const [query, setQuery] = React.useState(mediaQuery);
     const [expanded, setExpanded] = React.useState(query.matches);
-  
+    const { currentUser, logout } = useAuth()
+
     React.useEffect(() => {
       mediaQuery.addListener(setQuery);
       return () => mediaQuery.removeListener(setQuery);
@@ -17,6 +20,16 @@ const SidebarLayout = ({ children }) => {
       setExpanded(query.matches);
     }, [query]);
     
+    async function handleLogout(){
+        setError('')
+        try{
+            logout()
+            //navigate.push("/login")
+        }catch(err){
+            setError(`Failed to logout: ${err}`)
+        }
+    }
+
     return (
         <>
             
@@ -36,6 +49,8 @@ const SidebarLayout = ({ children }) => {
 
                     <div className="sidebar-item">
                         <p>martinbarker.me</p>
+                        <label htmlFor="sidebar-checkbox" className="sidebar-toggle">CLICK</label>
+                      
                     </div>
 
                     <nav className="sidebar-nav">
@@ -46,27 +61,17 @@ const SidebarLayout = ({ children }) => {
                         <hr></hr>
                         <a>~~ Auth ~~</a>
                         <Link className="sidebar-nav-item" to="/login">Login</Link>
+                        <Link className="sidebar-nav-item" to="/signup">Signup</Link>
+                        <Link className="sidebar-nav-item" to="/profile">Profile</Link>
+                        <button onClick={handleLogout}>Logout</button>
                         
                     </nav>
 
                 </div>
 
-                <div className="wrap">
-                    
-                    <div className="topnav">
-                        
-                        <a className="active" href="#home">   zzzzzzzz 
-                            <label htmlFor="sidebar-checkbox" className="sidebar-toggle">CLICK</label>
-                        </a>
-                        <a href="#news">Login</a>
-                        <a href="#contact">Signout</a>
-                        <a href="#about">Account</a>
-                        <a href="#about">SignUp</a>
-                    </div>
-                    
+                <div className="wrap">  
+                    {error && <h1>error={error}</h1>}
                     {children}
-                    
-                
                 </div>
 
             </div>

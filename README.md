@@ -1,3 +1,6 @@
+## USE_CASE
+ - drag files+img into rendertune
+ - vid rendered, uploaded to yt, date sched 
 ## TODO
 - clean up compile errors (remove href, etc..)
 - clean up file structure (tagger component+js+css all in one folder)
