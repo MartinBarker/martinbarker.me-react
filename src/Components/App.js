@@ -28,10 +28,10 @@ function App() {
           <Route path="/dash" element={<PrivateRoute> <Dashboard /> </PrivateRoute>} />
           <Route path="/update-profile" element={<PrivateRoute> <UpdateProfile /> </PrivateRoute>} />
           <Route exact path="/signup" element={<Signup />} />
-          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/login" element={ <SidebarLayout> <Login /> </SidebarLayout>} />
           <Route exact path="/forgot-password" element={<ForgotPassword />} />
           {/* My Website Routes */}
-          <Route exact path="/tagger" element={ <MainSidebar> <Tagger/> </MainSidebar> } />
+          <Route exact path="/tagger" element={ <SidebarLayout> <Tagger/> </SidebarLayout> } />
           <Route exact path="/rendertune" element={ <MainSidebar> <RenderTune/> </MainSidebar> } />
 
       

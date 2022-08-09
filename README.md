@@ -1,3 +1,11 @@
+## TODO
+- clean up compile errors (remove href, etc..)
+- clean up file structure (tagger component+js+css all in one folder)
+- work on auth flow (google/twitter/fb/github/sign-in)
+- tagger2.0
+- website img picker
+- user auth page with ability to connect youtube acc
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
