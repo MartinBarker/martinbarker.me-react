@@ -10,12 +10,16 @@ import ForgotPassword from "./ForgotPassword"
 import PrivateRoute from './PrivateRoute'
 import UpdateProfile from "./UpdateProfile"
 import Dashboard from "./Dashboard"
+
+//import Ytapi from "./Ytapi"
+
 import { AuthProvider } from "../Contexts/AuthContext"
 import {
   BrowserRouter as Router,
   Routes,
   Route,
 } from "react-router-dom";
+
 
 function App() {
   return (
@@ -32,6 +36,11 @@ function App() {
           <Route exact path="/tagger" element={ <SidebarLayout> <Tagger/> </SidebarLayout> } />
           <Route exact path="/rendertune" element={ <MainSidebar> <RenderTune/> </MainSidebar> } />
 
+
+          
+          {/* 
+          <Route exact path="/ytapi" element={ <SidebarLayout> <Ytapi/> </SidebarLayout> } />
+          */}
       
         </Routes>
       </AuthProvider>

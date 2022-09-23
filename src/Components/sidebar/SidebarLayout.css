@@ -83,12 +83,11 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Style and "hide" the sidebar */
 .sidebar {
+  overflow-y: auto!important;
   position: fixed;
   top: 0;
   bottom: 0;
-
   visibility: hidden;
-  overflow-y: auto;
   font-family: "PT Sans", Helvetica, Arial, sans-serif;
   font-size: .875rem; /* 15px */
   color: rgba(255,255,255,.6);
@@ -136,14 +135,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Style the `label` that we use to target the `.sidebar-checkbox` */
-.sidebar-toggle {
-  color:blue;
-  background:orange;
-
+.sidebar-toggle {  
+  left:167px;
+  background:greenyellow;
+  color:pink;
   position: absolute;
-  top:  1rem;
   display: block;
-  padding: .5rem .65rem;
+  padding: 0.5rem 0.65rem;
   border-radius: 4px;
   cursor: pointer;
 }

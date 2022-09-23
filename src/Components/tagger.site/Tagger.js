@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import * as mmb from 'music-metadata-browser';
 import './Tagger.css';
 import { FileUploader } from "react-drag-drop-files";
+import { version } from 'react';
 
+getVersion()
+function getVersion(){
+    console.log("version = ", version);
+}
 
 function formatTime(timeSeconds) {
     let timeStr = ""

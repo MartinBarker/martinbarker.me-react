@@ -32,30 +32,27 @@ const SidebarLayout = ({ children }) => {
 
     return (
         <>
-            
             <div>
 
-            
-           
-            <input
-                type="checkbox"
-                className="sidebar-checkbox"
-                id="sidebar-checkbox"
-                checked={expanded}
-                onChange={(e) => setExpanded(e.target.checked)}
-            ></input>
+                <input
+                    type="checkbox"
+                    className="sidebar-checkbox"
+                    id="sidebar-checkbox"
+                    checked={expanded}
+                    onChange={(e) => setExpanded(e.target.checked)}
+                ></input>
 
                 <div className="sidebar" id="sidebar">
-
+                    
+                      
                     <div className="sidebar-item">
                         <p>martinbarker.me</p>
-                        <label htmlFor="sidebar-checkbox" className="sidebar-toggle">CLICK</label>
-                      
                     </div>
 
                     <nav className="sidebar-nav">
                         <Link className="sidebar-nav-item" to="/">Home</Link>
                         <Link className="sidebar-nav-item" to="/tagger">tagger</Link>
+                        <Link className="sidebar-nav-item" to="/ytapi">Ytapi</Link>
                         <Link className="sidebar-nav-item" to="/rendertune">rendertune</Link>
                         <Link className="sidebar-nav-item" to="/pcd">public copyright database</Link>
                         <hr></hr>
@@ -70,6 +67,8 @@ const SidebarLayout = ({ children }) => {
                 </div>
 
                 <div className="wrap">  
+                    <label htmlFor="sidebar-checkbox" className="sidebar-toggle">CLICK</label>
+                    <br></br>
                     {error && <h1>error={error}</h1>}
                     {children}
                 </div>
