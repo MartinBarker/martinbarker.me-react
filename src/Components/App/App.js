@@ -1,23 +1,23 @@
 import React from "react"
-import Signup from "./Signup"
-import Login from "./Login"
-import Tagger from "./Tagger"
-import MainSidebar from "./MainSidebar"
-import RenderTune from "./RenderTune"
-import ForgotPassword from "./ForgotPassword"
-import PrivateRoute from './PrivateRoute'
-import UpdateProfile from "./UpdateProfile"
-import Dashboard from "./Dashboard"
-import ResponsiveMobileView from "./ResponsiveMobileView"
+import Signup from "../Auth/Signup"
+import Login from "../Auth/Login"
+import Tagger from "../Tagger/Tagger"
+import MainSidebar from "../MainSidebar/MainSidebar"
+import RenderTune from "../RenderTune/RenderTune"
+import ForgotPassword from "../Auth/ForgotPassword"
+import PrivateRoute from '../Auth/PrivateRoute'
+import UpdateProfile from "../Auth/UpdateProfile"
+import Dashboard from "../Auth/Dashboard"
+import ResponsiveMobileView from "../ResponsiveMobileView/ResponsiveMobileView"
 
-import { AuthProvider } from "../Contexts/AuthContext"
+import { AuthProvider } from "../../Contexts/AuthContext"
 import {
   BrowserRouter as Router,
   Routes,
   Route,
 } from "react-router-dom";
 
-
+import './App.css';
 
 function App() {
   return (

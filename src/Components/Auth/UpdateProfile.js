@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
-import { useAuth } from '../Contexts/AuthContext'
-import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from '../../Contexts/AuthContext'
+import { Link } from "react-router-dom";
 
 export default function UpdateProfile() {
     const emailRef = useRef()
@@ -9,7 +9,7 @@ export default function UpdateProfile() {
     const { currentUser, updatePassword, updateEmail } = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
 
     function handleSubmit(e){
         e.preventDefault()
@@ -28,7 +28,7 @@ export default function UpdateProfile() {
             promises.push(updatePassword(passwordRef.current.value))
         }
         Promise.all(promises).then(()=>{
-            navigate("/");
+            //navigate("/");
         }).catch(()=>{
             setError('Failed to update account')
         }).finally(()=>{

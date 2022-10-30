@@ -1,15 +1,15 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import "./MainSidebar.css"
-import ProgressiveImage from "./ProgressiveImage";
-import { Link, useNavigate } from "react-router-dom";
+import ProgressiveImage from "../ProgressiveImage";
+import { Link } from "react-router-dom";
 //get images from folder
 
 
 function importAll(r) {
     return r.keys().map(r);
 }
-const images = importAll(require.context('../aesthetic-images/', (false), (/^\.\/.*$/), ('sync')))
-const thumbnails = importAll(require.context('../aesthetic-images/thumbnails/', (false), (/^\.\/.*$/), ('sync')))
+const images = importAll(require.context('../../aesthetic-images/', (false), (/^\.\/.*$/), ('sync')))
+const thumbnails = importAll(require.context('../../aesthetic-images/thumbnails/', (false), (/^\.\/.*$/), ('sync')))
     
 
 
@@ -62,22 +62,22 @@ const MainSidebar = ({ children }) => {
                     {/* Martin Barker */}
                     <div className="color0">
                         {/* Name Text */}
-                        <a href="#" className='sidebar-header color1'>Martin Barker</a>
+                        <a href="/" className='sidebar-header color1'>Martin Barker</a>
                     </div>
 
-                    <a href="#" className='color2'>About</a>
+                    <a href="/" className='color2'>About</a>
 
-                    <a className="color3" data-ulid="expand_this" onClick={menuItemClicked} href="#">Projects X</a>
+                    <a className="color3" data-ulid="expand_this" onClick={menuItemClicked} href="/">Projects X</a>
                     <ul className={` ${toggleMenuItem ? 'ul-show' : ' '} `}>
-                        <li><a href="#">tagger.site</a></li>
+                        <li><a href="/">tagger.site</a></li>
                         <li>
                             <Link to="/rendertune">RenderTune</Link>
                         </li>
-                        <li><a href="#">Vinyl2Digital</a></li>
-                        <li><a href="#">Popularify</a></li>
+                        <li><a href="/">Vinyl2Digital</a></li>
+                        <li><a href="/">Popularify</a></li>
                     </ul>
-                    <a href="#">Blog</a>
-                    <a href="#">Contact</a>
+                    <a href="/">Blog</a>
+                    <a href="/">Contact</a>
 
                     {/* Image Display LazyLoad */}
                     <div className='imgColor'>
@@ -113,11 +113,9 @@ const MainSidebar = ({ children }) => {
                         <h4>responsive page content </h4>
                     </div>
 
-                    {/* 
                     <div className={`  ${!toggleSidebarIcon ? ' ' : '  '}`}>
                         {children}
                     </div>
-                    */}
 
                 </div>
             </div>

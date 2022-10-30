@@ -1,5 +1,14 @@
 
 
+  @font-face {
+    font-family: 'SatoshiRegular';
+    src: url("../../fonts/Satoshi-Regular.otf") format("opentype");
+}
+
+.body {
+    font-family: SatoshiRegular
+  }
+
 .colorSrcImg{
     width:100px
 }
@@ -11,7 +20,7 @@
 
 html,
 body {
-  font-family: "Lato", sans-serif;
+  font-family: "SatoshiRegular", sans-serif;
   height: 100%;
   margin: 0;
 }

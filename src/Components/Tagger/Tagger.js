@@ -2,15 +2,6 @@ import React, { Component } from 'react';
 import * as mmb from 'music-metadata-browser';
 import './Tagger.css';
 
-function openNav() {
-    document.getElementById("mySidebar").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
-}
-
-function closeNav() {
-    document.getElementById("mySidebar").style.width = "0";
-    document.getElementById("main").style.marginLeft = "0";
-}
 
 function formatTime(timeSeconds) {
     let timeStr = ""
@@ -143,7 +134,12 @@ class App extends Component {
                 <hr></hr>
 
                 {/* timestamped tracklist output */}
-                <textarea id='textarea' rows="7" cols="44" onChange={this.onChangeTextArea} value={timestampTxt}></textarea>
+                <textarea 
+                    id='textarea' 
+                    rows="7" 
+                    cols="44" 
+                    onChange={this.onChangeTextArea} 
+                    value={timestampTxt}></textarea>
                 <br></br>
 
                 {/* timestamped tracklist format options */}
@@ -158,17 +154,15 @@ class App extends Component {
                 {/* Metadata Tags - Output */}
                 <div>
                     <p>Metadata Output</p>
-                    <textarea>
-                        tag1, tag2, tag3
-                    </textarea>
+                    <textarea></textarea>
+                    {/* tag1, tag2, tag3 */}
                 </div>
 
                 {/* Metadata Tags - Options */}
                 <div>
                     <p>Metadata Tag Options</p>
-                    <textarea>
-                        Max tag char limit = 100
-                    </textarea>
+                    <textarea></textarea>
+                    {/* Max tag char limit = 100 */}
 
                 </div>
 
