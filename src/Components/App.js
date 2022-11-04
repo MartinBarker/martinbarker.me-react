@@ -1,26 +1,34 @@
 import React from "react"
-import Signup from "./Signup"
-import Login from "./Login"
-import Tagger from "./Tagger"
-import MainSidebar from "./MainSidebar"
-import RenderTune from "./RenderTune"
-import ForgotPassword from "./ForgotPassword"
-import PrivateRoute from './PrivateRoute'
-import UpdateProfile from "./UpdateProfile"
-import Dashboard from "./Dashboard"
+import Tagger from "./Tagger/Tagger"
+import MainSidebar from "./MainSidebar/MainSidebar"
+import RenderTune from "./RenderTune/RenderTune"
+import ResponsiveMobileView from "./ResponsiveMobileView/ResponsiveMobileView"
+
+
+
 import { AuthProvider } from "../Contexts/AuthContext"
+import ForgotPassword from "./Auth/ForgotPassword"
+import PrivateRoute from './Auth/PrivateRoute'
+import UpdateProfile from "./Auth/UpdateProfile"
+import Dashboard from "./Auth/Dashboard"
+import Signup from "./Auth/Signup"
+import Login from "./Auth/Login"
+
 import {
   BrowserRouter as Router,
   Routes,
   Route,
 } from "react-router-dom";
 
+
+
+
 function App() {
   return (
+
     <Router>
       <AuthProvider>
         <Routes>
-          {/* User Auth Stuff */}
           <Route path="/" element={<PrivateRoute> <Dashboard /> </PrivateRoute>} />
           <Route path="/update-profile" element={<PrivateRoute> <UpdateProfile /> </PrivateRoute>} />
           <Route exact path="/signup" element={<Signup />} />
@@ -29,7 +37,12 @@ function App() {
 
           <Route exact path="/tagger" element={ <MainSidebar> <Tagger/> </MainSidebar> } />
 
+          <Route exact path="/responsivemobileview" element={<ResponsiveMobileView/> } />
+
+          
+
           <Route exact path="/rendertune" element={ <MainSidebar> <RenderTune/> </MainSidebar> } />
+    
 
       
         </Routes>

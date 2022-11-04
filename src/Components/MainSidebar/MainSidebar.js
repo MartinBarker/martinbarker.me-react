@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import "./MainSidebar.css"
-import ProgressiveImage from "./ProgressiveImage";
+import ProgressiveImage from "../ProgressiveImage";
 import { Link } from "react-router-dom";
 import { ColorExtractor } from 'react-color-extractor'
 
@@ -8,22 +8,29 @@ import { ColorExtractor } from 'react-color-extractor'
 function importAll(r) {
     return r.keys().map(r);
 }
-const images = importAll(require.context('../aesthetic-images/', (false), (/^\.\/.*$/), ('sync')))
-const thumbnails = importAll(require.context('../aesthetic-images/thumbnails/', (false), (/^\.\/.*$/), ('sync')))
+const images = importAll(require.context('../../aesthetic-images/', (false), (/^\.\/.*$/), ('sync')))
+const thumbnails = importAll(require.context('../../aesthetic-images/thumbnails/', (false), (/^\.\/.*$/), ('sync')))
     
 const MainSidebar = ({ children }) => {
-    useEffect(() => {
-        getRandomImage() 
-    }, []);
+    
+
+    
+    useEffect(
+        getRandomImage,
+        []
+    )
+
 
     function getRandomImage() {
-        console.log('getRandomImage()')
         var randomImgIndex = Math.floor(Math.random() * images.length) + 0
         var randomImg = images[randomImgIndex]
         var randomImgThumbnail = thumbnails[randomImgIndex]
-        console.log('getRandomImage() randomImg= ', randomImg)
+        var colorSrcImg = randomImg
+        //remove leading '/' char
+        colorSrcImg = colorSrcImg.substring(1);
+        console.log('getRandomImage() colorSrcImg= ', colorSrcImg)
 
-        setColorSrcImg(randomImg)
+        setColorSrcImg(colorSrcImg)
         setColorSrcImgThumbnail(randomImgThumbnail)
 
     }
@@ -55,42 +62,50 @@ const MainSidebar = ({ children }) => {
                     {/* Martin Barker */}
                     <div className="color0">
                         {/* Name Text */}
-                        <a href="# " className='sidebar-header color1'>Martin Barker</a>
+                        <a href="/#" className='sidebar-header color1'>Martin Barker</a>
                     </div>
 
-                    <a href="# " className='color2'>About</a>
+                    <a href="/#" className='color2'>About</a>
 
-                    <a className="color3" data-ulid="expand_this" onClick={menuItemClicked} href="# ">Projects <p id='projects-arrow'>▼</p></a>
+                    <a className="color3" data-ulid="expand_this" onClick={menuItemClicked} href="/#">Projects <p id='projects-arrow'>▼</p></a>
                     <ul className={` ${toggleMenuItem ? 'ul-show' : ' '} `}>
-                        <li><a href="# ">tagger.site</a></li>
+                        <li><a href="/#">tagger.site</a></li>
                         <li>
                             <Link to="/rendertune">RenderTune</Link>
                         </li>
-                        <li><a href="# ">Vinyl2Digital</a></li>
-                        <li><a href="# ">Popularify</a></li>
+                        <li><a href="/#">Vinyl2Digital</a></li>
+                        <li><a href="/#">Popularify</a></li>
                     </ul>
-                    <a href="# ">Blog</a>
-                    <a href="# ">Contact</a>
+                    <a href="/#">Blog</a>
+                    <a href="/#">Contact</a>
 
                     {/* Image Display LazyLoad */}
                     <div className='imgColor'>
-                        <button onClick={getRandomImage}>Refresh Colors</button>
+
+
+                        <div id="colorBox1"></div>
+                        <button onClick={getRandomImage}>Refresh Colors</button> 
                         <br></br>
                         <p>img colors</p>
 
                         <div className="content">
                             <div className="row"> 
                                 <div className="cell">
+                                
+                                
+                                { colorSrcImg!=="" ? 
+                                    <ColorExtractor
+                                        onError={error => console.log(`err=`,error)}
+                                        src={colorSrcImg}
+                                        getColors={colors => console.log(`colors=`,colors)}
+                                    /> 
+                                : null}
+
                                 <ProgressiveImage
                                     className={"colorSrcImg"}
                                     alt={"color source image"}
                                     overlaySrc={colorSrcImgThumbnail}
                                     src={colorSrcImg}
-                                />
-                                <ColorExtractor
-                                    onError={error => console.log(error)}
-                                    src={colorSrcImgThumbnail}
-                                    getColors={colors => console.log(colors)}
                                 />
                                 </div>
                             </div>
@@ -104,7 +119,7 @@ const MainSidebar = ({ children }) => {
 
                     {/* Open & Close Sidebar Button */}
                     <button  className={`sidebarBtn ${toggleSidebarIcon ? 'collapsed-sidebarBtn' : ' '} `} onClick={sideNavClicked}>
-                        <a className={`chevron-char ${toggleSidebarIcon ? 'sidebar-collapsed' : ' '} `} >&gt;</a>
+                        <a href="/#" className={`chevron-char ${toggleSidebarIcon ? 'sidebar-collapsed' : ' '} `} >&gt;</a>
                     </button>
                     
                     {children}

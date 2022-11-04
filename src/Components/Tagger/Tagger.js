@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as mmb from 'music-metadata-browser';
 import './Tagger.css';
 import { FileUploader } from "react-drag-drop-files";
-
+import {Discojs} from 'discojs'
 
 function formatTime(timeSeconds) {
     let timeStr = ""
@@ -190,12 +190,22 @@ class App extends Component {
         console.log('submitURL(), url = ', url)
         //determine which api to query
 
-        //make request to node express proxy to avoid CORS
+        //discogs get info
+        const client = new Discojs({
+            userToken: 'nlqiWCVizVKGgmxQBVtwTlpEBdWOsrFpcZcMJysB' //process.env.USER_TOKEN,
+        })
 
-        //fetch('http://localhost:8080/bandcamp?url=https://ultramajic.bandcamp.com/album/the-ashtar-lavanda-mix')
-        //    .then(response => console.log('response=', response))
-        //    .then(data => console.log('data=', data));
+        //search for discogs artist
+        client.searchArtist('Jacob Desvarieux')
+        .then((data) => {
+            console.log('discogsdata=',data)
+        })
+        .catch((error) => {
+            console.warn('Oops, something went wrong!', error)
+        })
 
+
+/*
         fetch(`/bandcamp?url=${url}`, { 
             method: 'get', 
             headers: new Headers({
@@ -206,7 +216,7 @@ class App extends Component {
         .then(response => 
             console.log('response=', response)
         );
-
+*/
         /*
         var http = require ('http');
         http.get ({

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { useAuth } from '../Contexts/AuthContext'
+import { useAuth } from '../../Contexts/AuthContext'
 import { Link, useNavigate } from "react-router-dom";
 
 export default function UpdateProfile() {

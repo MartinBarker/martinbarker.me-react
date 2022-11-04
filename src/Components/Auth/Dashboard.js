@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link,  } from "react-router-dom";
-import { useAuth } from "../Contexts/AuthContext"
+import { useAuth } from "../../Contexts/AuthContext"
 
 export default function Dashboard() {
     const [error, setError] = useState("")
