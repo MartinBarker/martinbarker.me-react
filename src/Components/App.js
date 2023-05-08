@@ -3,9 +3,6 @@ import Tagger from "./Tagger/Tagger"
 import MainSidebar from "./MainSidebar/MainSidebar"
 import RenderTune from "./RenderTune/RenderTune"
 import ResponsiveMobileView from "./ResponsiveMobileView/ResponsiveMobileView"
-
-
-
 import { AuthProvider } from "../Contexts/AuthContext"
 import ForgotPassword from "./Auth/ForgotPassword"
 import PrivateRoute from './Auth/PrivateRoute'
@@ -13,6 +10,8 @@ import UpdateProfile from "./Auth/UpdateProfile"
 import Dashboard from "./Auth/Dashboard"
 import Signup from "./Auth/Signup"
 import Login from "./Auth/Login"
+
+import Sidebar from "./Sidebar"
 
 import {
   BrowserRouter as Router,
@@ -34,17 +33,12 @@ function App() {
           <Route exact path="/signup" element={<Signup />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/forgot-password" element={<ForgotPassword />} />
-
+          <Route exact path="/responsivemobileview" element={<ResponsiveMobileView/> } />
+          <Route exact path="/rendertune" element={ <MainSidebar> <RenderTune/> </MainSidebar> } />
           <Route exact path="/tagger" element={ <MainSidebar> <Tagger/> </MainSidebar> } />
 
-          <Route exact path="/responsivemobileview" element={<ResponsiveMobileView/> } />
+          <Route exact path="/sidebar" element={ <Sidebar> "here is mainsidebar content" </Sidebar> } />
 
-          
-
-          <Route exact path="/rendertune" element={ <MainSidebar> <RenderTune/> </MainSidebar> } />
-    
-
-      
         </Routes>
       </AuthProvider>
     </Router>
