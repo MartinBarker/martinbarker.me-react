@@ -26,7 +26,7 @@
   },
   "proxy": "http://localhost:8080",
   "scripts": {
-    "s": "GENERATE_SOURCEMAP=false BROWSER=none react-scripts start",
+    "s": "GENERATE_SOURCEMAP=false BROWSER=none react-scripts --openssl-legacy-provider start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
