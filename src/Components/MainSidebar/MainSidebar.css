@@ -1,13 +1,20 @@
+#titlebar{
+  top: 0px;
+  display: block;
+  position: fixed;
+  height: 40px;
+  width: calc(100%);
+  background: #254053;
+}
 
-
+ul a{
+  color:white
+}
 
 #drop-area {
   border: 2px dashed greenyellow;
 }
 
-#mySidebar {
-  height: 100%;
-}
 
 .colorSrcImg {
   width: 100%
@@ -45,7 +52,6 @@ body {
   z-index: 1;
   top: 0;
   left: 0;
-  overflow: hidden;
 
   right: 0;
   -webkit-transform: translate3d(calc(-100%), 0, 0);
@@ -152,7 +158,6 @@ body {
 .main-content .sidebar ul {
   margin: 0;
   max-height: 0px;
-  overflow: hidden;
   transition: max-height 200ms;
 }
 
